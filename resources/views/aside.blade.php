@@ -29,8 +29,35 @@
         <li class="header">Menu</li>
         
         
-            <li><a href="{{ url('/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Presensi</a></li>
+            <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> <span>Guru</span>
+                        <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('data-guru') }}"><i class="fa fa-circle-o"></i>Data Guru</a></li>
+                    <li><a href="{{ url('pengampu') }}"><i class="fa fa-circle-o"></i>Pengampu</a></li>
+                    <li><a href="{{ url('wali-kelas') }}"><i class="fa fa-circle-o"></i>Wali Kelas</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> <span>Siswa</span>
+                        <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('data-siswa') }}"><i class="fa fa-circle-o"></i>Data siswa</a></li>
+                    <li><a href="{{ url('nilai') }}"><i class="fa fa-circle-o"></i>Nilai</a></li>
+                    <li><a href="{{ url('presensi') }}"><i class="fa fa-circle-o"></i>Presensi</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ url('data-guru') }}"><i class="fa fa-circle-o"></i> Presensi</a></li>
             <li><a href="{{ url('data-master') }}"><i class="fa fa-circle-o"></i> Data Mater</a></li>      
        
 

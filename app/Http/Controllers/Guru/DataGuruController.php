@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Http\Controllers\Guru;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\DataGuru;
+use App\Models\User;
+use Alert;
+
+class DataGuruController extends Controller
+{
+    public function index()
+    {
+    	$data = DataGuru::with('user')->paginate(10);
+        $user = User::get();
+
+    	return view('guru/data-guru.index',compact('data','user'));
+    }
+
+    public function store(Request $request)
+    {   
+        $this->validate($request, [
+
+            'nip' => 'required|numeric'
+
+            ]);
+
+        if ($request->input('user_id') != null) {            
+                     
+         $data = [
+                    'nip'               => $request->input('nip'),
+                    'user_id'           => $request->input('user_id'),
+                    'nama_depan'        => $request->input('nama_depan'),
+                    'nama_belakang'     => $request->input('nama_belakang'),
+                    'alamat'            => $request->input('alamat'),
+                    'no_telp'           => $request->input('no_telp'),                    
+                 ];
+
+        }
+        else {
+
+            alert()->error('');
+            Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
+            return redirect()->route('data-guru.index');
+        }
+
+            DataGuru::create($data, $request->all());
+
+            alert()->success('');
+            Alert::success('Data berhasil ditambah', 'Sukses');
+            return redirect()->route('data-guru.index');
+    }
+
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, [
+
+            'nip' => 'required|numeric'
+
+            ]);
+        
+        if ($request->input('user_id') != null) {            
+                     
+         $data = [
+                    'nip'               => $request->input('nip'),
+                    'user_id'           => $request->input('user_id2'),
+                    'nama_depan'        => $request->input('nama_depan'),
+                    'nama_belakang'     => $request->input('nama_belakang'),
+                    'alamat'            => $request->input('alamat'),
+                    'no_telp'           => $request->input('no_telp'),
+                 ];
+         }
+
+        else {
+            alert()->error('');
+            Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
+            return redirect()->route('data-guru.index');
+        }
+
+    	DataGuru::find($id)->update($data, $request->all());
+
+        alert()->success('');
+        Alert::success('Data berhasil diubah', 'Sukses');
+        return redirect()->route('data-guru.index');
+    }
+
+    public function destroy($id)
+    {   
+        DataGuru::find($id)->delete();
+        alert()->success('');
+        Alert::success('Data berhasil dihapus', 'Sukses');
+        return redirect()->route('data-guru.index');
+    }
+}

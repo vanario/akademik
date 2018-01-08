@@ -16,21 +16,57 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('penduduk', function () {
-    return view('penduduk/index');
-});
+Route::group(['prefix' => 'data-guru', 'middleware' => ['auth']], function() {
 
-Route::get('detail', function () {
-    return view('penduduk/detail');
-});
+     Route::get('/','Guru\DataGuruController@index')->name('data-guru.index');
+     Route::post('store','Guru\DataGuruController@store')->name('data-guru.store');
+     Route::match(['put','patch'],'update/{id}','Guru\DataGuruController@update')->name('data-guru.update');
+     Route::get('delete/{id}', 'Guru\DataGuruController@destroy')->name('data-guru.delete');
+  });
+
+Route::group(['prefix' => 'pengampu', 'middleware' => ['auth']], function() {
+
+     Route::get('/','Guru\PengampuController@index')->name('pengampu.index');
+     Route::post('store','Guru\PengampuController@store')->name('pengampu.store');
+     Route::match(['put','patch'],'update/{id}','Guru\PengampuController@update')->name('pengampu.update');
+     Route::get('delete/{id}', 'Guru\PengampuController@destroy')->name('pengampu.delete');
+  });
+
+Route::group(['prefix' => 'wali-kelas', 'middleware' => ['auth']], function() {
+
+     Route::get('/','Guru\WaliKelasController@index')->name('wali-kelas.index');
+     Route::post('store','Guru\WaliKelasController@store')->name('wali-kelas.store');
+     Route::match(['put','patch'],'update/{id}','Guru\WaliKelasController@update')->name('wali-kelas.update');
+     Route::get('delete/{id}', 'Guru\WaliKelasController@destroy')->name('wali-kelas.delete');
+  });
+
+Route::group(['prefix' => 'data-siswa', 'middleware' => ['auth']], function() {
+
+     Route::get('/','Siswa\DataSiswaController@index')->name('data-siswa.index');
+     Route::post('store','Siswa\DataSiswaController@store')->name('data-siswa.store');
+     Route::match(['put','patch'],'update/{id}','Siswa\DataSiswaController@update')->name('data-siswa.update');
+     Route::get('delete/{id}', 'Siswa\DataSiswaController@destroy')->name('data-siswa.delete');
+  });
+
+Route::group(['prefix' => 'nilai', 'middleware' => ['auth']], function() {
+
+     Route::get('/','Siswa\NilaiController@index')->name('nilai.index');
+     Route::post('store','Siswa\NilaiController@store')->name('nilai.store');
+     Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
+     Route::get('delete/{id}', 'Siswa\NilaiController@destroy')->name('nilai.delete');
+  });
+
+Route::group(['prefix' => 'presensi', 'middleware' => ['auth']], function() {
+
+     Route::get('/','Siswa\PresensiController@index')->name('presensi.index');
+     Route::post('store','Siswa\PresensiController@store')->name('presensi.store');
+     Route::match(['put','patch'],'update/{id}','Siswa\PresensiController@update')->name('presensi.update');
+     Route::get('delete/{id}', 'Siswa\PresensiController@destroy')->name('presensi.delete');
+  });
 
 Route::get('data-master', function () {
     return view('data-master/index');
 });
-
-// Route::resource('slider', 'Slider\SliderController', ['only' => [
-//     'index', 'store', 'update', 'destroy'
-// ]]);
 
 Route::group(['prefix' => 'slider', 'middleware' => ['auth']], function() {
 
@@ -71,3 +107,5 @@ Route::group(['prefix' => 'tahun-ajar', 'middleware' => ['auth']], function() {
      Route::match(['put','patch'],'update/{id}','Master\TahunAjarController@update')->name('tahun-ajar.update');
      Route::get('delete/{id}', 'Master\TahunAjarController@destroy')->name('tahun-ajar.delete');
   });
+
+
