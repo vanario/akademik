@@ -42,7 +42,7 @@ Route::group(['prefix' => 'wali-kelas', 'middleware' => ['auth']], function() {
 
 Route::group(['prefix' => 'data-siswa', 'middleware' => ['auth']], function() {
 
-     Route::get('/','Siswa\DataSiswaController@index')->name('data-siswa.index');
+     Route::match(['get','post'],'/','Siswa\DataSiswaController@index')->name('data-siswa.index');
      Route::post('store','Siswa\DataSiswaController@store')->name('data-siswa.store');
      Route::match(['put','patch'],'update/{id}','Siswa\DataSiswaController@update')->name('data-siswa.update');
      Route::get('delete/{id}', 'Siswa\DataSiswaController@destroy')->name('data-siswa.delete');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'data-siswa', 'middleware' => ['auth']], function() {
 
 Route::group(['prefix' => 'nilai', 'middleware' => ['auth']], function() {
 
-     Route::get('/','Siswa\NilaiController@index')->name('nilai.index');
+     Route::match(['get','post'],'/','Siswa\NilaiController@index')->name('nilai.index');
      Route::post('store','Siswa\NilaiController@store')->name('nilai.store');
      Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
      Route::get('delete/{id}', 'Siswa\NilaiController@destroy')->name('nilai.delete');
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'nilai', 'middleware' => ['auth']], function() {
 
 Route::group(['prefix' => 'presensi', 'middleware' => ['auth']], function() {
 
-     Route::get('/','Siswa\PresensiController@index')->name('presensi.index');
+     Route::match(['get','post'],'/','Siswa\PresensiController@index')->name('presensi.index');
      Route::post('store','Siswa\PresensiController@store')->name('presensi.store');
      Route::match(['put','patch'],'update/{id}','Siswa\PresensiController@update')->name('presensi.update');
      Route::get('delete/{id}', 'Siswa\PresensiController@destroy')->name('presensi.delete');

@@ -57,7 +57,6 @@
                     <li><a href="{{ url('presensi') }}"><i class="fa fa-circle-o"></i>Presensi</a></li>
                 </ul>
             </li>
-            <li><a href="{{ url('data-guru') }}"><i class="fa fa-circle-o"></i> Presensi</a></li>
             <li><a href="{{ url('data-master') }}"><i class="fa fa-circle-o"></i> Data Mater</a></li>      
        
 

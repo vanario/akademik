@@ -11,7 +11,7 @@ class SemesterController extends Controller
 {
     public function index()
     {
-    	$data = Ref_Semester::paginate(10);
+    	$data = Ref_Semester::orderBy('id','DESC')->paginate(10);
 
     	return view('data-master/semester.index',compact('data'));
     }

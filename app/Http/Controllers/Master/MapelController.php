@@ -11,7 +11,7 @@ class MapelController extends Controller
 {
     public function index()
     {
-    	$data = Ref_Mapel::paginate(10);
+    	$data = Ref_Mapel::orderBy('id','DESC')->paginate(10);
 
     	return view('data-master/mapel.index',compact('data'));
     }

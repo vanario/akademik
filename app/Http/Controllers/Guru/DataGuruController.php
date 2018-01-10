@@ -12,7 +12,7 @@ class DataGuruController extends Controller
 {
     public function index()
     {
-    	$data = DataGuru::with('user')->paginate(10);
+    	$data = DataGuru::with('user')->orderBy('id','DESC')->paginate(10);
         $user = User::get();
 
     	return view('guru/data-guru.index',compact('data','user'));

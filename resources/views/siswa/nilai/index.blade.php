@@ -7,10 +7,74 @@
 <div class="row">
     <section class="content">
         <div class="content-list">
-            <div class="box-list">
+            <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a>
 
-                <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a>
+                 <form method="POST" action="{{ url('nilai') }}">
+                    {{ csrf_field() }}
+                    <div class="report-list">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Nama</label>
+                                    <input type="text" name="user_id" id="user_id2" class="form-control" placeholder="Nama" autocomplete="off">
+                                    <input type="hidden" name="user_id2" id="userValue2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Mata Pelajaran</label>
+                                    <select  name="mata_pelajaran_id" class="form-control">
+                                        <option value="">Pilih Mata Pelajaran</option>
+                                        @foreach($mapel as $id => $nama)
+                                            <option value="{{$id}}">{{$nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Kelas</label>
+                                    <select  name="kelas_id" class="form-control">
+                                        <option value="">Pilih Kelas</option>
+                                        @foreach($kelas as $id => $nama)
+                                            <option value="{{$id}}">{{$nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Semester</label>
+                                    <select  name="semester_id" class="form-control">
+                                        <option value="">Pilih Semester</option>
+                                        @foreach($semesters as $id => $semester)
+                                            <option value="{{$id}}">{{$semester}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Tahun Ajar</label>
+                                    <select  name="tahun_ajaran_id" class="form-control">
+                                        <option value="">Pilih Tahun Ajar</option>
+                                        @foreach($tahunajar as $id => $tahun_ajaran)
+                                            <option value="{{$id}}">{{$tahun_ajaran}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Aksi</label>
+                                    <button type="submit" class="btn btn-green btn-block">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
+                <div class="box-list" style="margin-top: 20px;">
                     <table class="table table-striped" style="width: 100%;">
 
                         <thead>
@@ -47,13 +111,14 @@
                             @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="7">No Records found !!</td>
+                                        <td class="alert alert-warning" colspan="9">No Records found !!</td>
                                     </tr>
                                 @endif
                         </tbody>
                     </table>
-                {{$data->render()}}
-            </div>
+                </div>
+            {{$data->render()}}
+        
         </div>
 
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -145,12 +210,7 @@
                                         <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Nama </label>
-                                <input type="text" value="{{ $val->siswa->nama_depan or "-" }}" name="siswa_id" id="siswa_id2" class="form-control" autocomplete="off" required>
-                                <input type="hidden" value="{{ $val->siswa_id }}" name="siswa_id2" id="siswaValue2" class="form-control">
-                            </div>                            
+                            </div>                                                        
                             <div class="form-group" {{$errors->has('nilai') ? 'has-error' : ''}}>
                                 <label for="">Nilai</label>
                                 <input type="text" name="nilai" value="{{ $val->nilai }}" id="nilai" class="form-control input-sm" required>
@@ -230,9 +290,9 @@
 <script type="text/javascript">
     $(function() {
         function displayResult(item) {            
-            $("#siswaValue2").val(item.value);
+            $("#userValue2").val(item.value);
         }
-        $('#siswa_id2').typeahead({
+        $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
                     { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },

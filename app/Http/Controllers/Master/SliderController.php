@@ -13,7 +13,7 @@ class SliderController extends Controller
    
     public function index()
     {
-        $data = Slider::paginate(5);
+        $data = Slider::orderBy('id','DESC')->paginate(5);
 
         return view('data-master/slider.index', compact('data'));
     }

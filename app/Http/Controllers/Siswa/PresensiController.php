@@ -13,10 +13,26 @@ use Alert;
 
 class PresensiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	$data       = Presensi::with('siswa','kelas','semester','tahun_ajaran')->paginate(10);
-        $siswa      = DataSiswa::get();
+    	$siswa      = DataSiswa::get();
+
+        $query = Presensi::query();
+
+            if($request->input('user_id2')) {
+                $query->where('siswa_id', $request->input('user_id2'));
+            }            
+            if($request->input('kelas_id')) {
+                $query->where('kelas_id', $request->input('kelas_id'));
+            }
+            if($request->input('tahun_ajaran_id')) {
+                $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
+            }
+            if($request->input('semester_id')) {
+                $query->where('semeseter_id', $request->input('semester_id'));
+            }
+            $data = $query->orderBy('id','DESC')->paginate(10);
+        
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();

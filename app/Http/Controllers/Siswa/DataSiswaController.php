@@ -10,12 +10,20 @@ use Alert;
 
 class DataSiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	$data = DataSiswa::with('user')->paginate(10);
-        $user = User::get();
 
-    	return view('siswa/data-siswa.index',compact('data','user'));
+         $query = DataSiswa::query();
+
+            if($request->input('user_id')) {
+                $query->where('nama_depan', $request->input('user_id'));
+            }                      
+            $data = $query->paginate(10);
+        
+        $user   = User::get();
+        $siswa  = DataSiswa::get(); 
+
+    	return view('siswa/data-siswa.index',compact('data','user','siswa'));
     }
 
     public function store(Request $request)

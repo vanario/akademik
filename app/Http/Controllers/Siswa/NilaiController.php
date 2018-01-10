@@ -14,16 +14,36 @@ use Alert;
 
 class NilaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	$data       = Nilai::with('siswa','mapel','kelas','semester','tahun_ajaran')->paginate(10);
         $siswa      = DataSiswa::get();
+
+            $query = Nilai::query();
+
+            if($request->input('user_id2')) {
+                $query->where('siswa_id', $request->input('user_id2'));
+            }
+            if($request->input('mata_pelajaran_id')) {
+                $query->where('mata_pelajaran_id', $request->input('mata_pelajaran_id'));
+            }
+            if($request->input('kelas_id')) {
+                $query->where('kelas_id', $request->input('kelas_id'));
+            }
+            if($request->input('tahun_ajaran_id')) {
+                $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
+            }
+            if($request->input('semester_id')) {
+                $query->where('semeseter_id', $request->input('semester_id'));
+            }
+            
+            $data = $query->orderBy('id','DESC')->paginate(10);
+
         $mapel      = Ref_Mapel::pluck('nama','id')->all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-    	return view('siswa/nilai.index',compact('data','siswa','mapel','semesters','tahunajar', 'kelas'));
+        return view('siswa/nilai.index',compact('data','siswa','mapel','semesters','tahunajar', 'kelas'));
     }
 
     public function store(Request $request)

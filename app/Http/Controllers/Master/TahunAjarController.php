@@ -11,7 +11,7 @@ class TahunAjarController extends Controller
 {
     public function index()
     {
-    	$data = Ref_TahunAjar::paginate(10);
+    	$data = Ref_TahunAjar::orderBy('id','DESC')->paginate(10);
 
     	return view('data-master/tahun-ajar.index',compact('data'));
     }

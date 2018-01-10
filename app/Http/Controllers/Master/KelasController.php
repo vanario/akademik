@@ -11,7 +11,7 @@ class KelasController extends Controller
 {
     public function index()
     {
-    	$data = Ref_Kelas::paginate(10);
+    	$data = Ref_Kelas::orderBy('id','DESC')->paginate(10);
 
     	return view('data-master/kelas.index',compact('data'));
     }

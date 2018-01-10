@@ -7,10 +7,34 @@
 <div class="row">
     <section class="content">
         <div class="content-list">
-            <div class="box-list">
+            
 
                 <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a>
 
+                
+                    <form method="POST" action="{{ url('data-siswa') }}">
+                        {{ csrf_field() }}
+                        <div class="report-list">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label for="">Nama</label>
+                                        <input type="text" name="user_id" id="user_id2" class="form-control" placeholder="Nama" autocomplete="off" required>
+                                        <input type="hidden" name="user_id2" id="userValue2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="">Aksi</label>
+                                        <button type="submit" class="btn btn-green btn-block">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                
+
+                <div class="box-list" style="margin-top: 20px;">
                     <table class="table table-striped" style="width: 100%;">
 
                         <thead>
@@ -23,6 +47,7 @@
                                 <th>Nama Wali Murid</th>
                                 <th>Alamat Wali Murid</th>
                                 <th>No Telepon Wali Murid</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
 
@@ -47,13 +72,14 @@
                             @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="7">No Records found !!</td>
+                                        <td class="alert alert-warning" colspan="9">No Records found !!</td>
                                     </tr>
                                 @endif
                         </tbody>
                     </table>
                 {{$data->render()}}
-            </div>
+                </div>
+            
         </div>
 
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -116,11 +142,6 @@
                             <h4>Edit Data Siswa</h4>
                         </div>
                         <div class="modal-body">                                         
-                            <div class="form-group">
-                                <label for="">Nama</label>
-                                <input type="text" name="user_id" id="user_id2" value="{{ $val->user->name or "-" }}" class="form-control" placeholder="Nama" autocomplete="off" required>
-                                <input type="hidden" value="{{ $val->user_id }}" name="user_id2" id="userValue2" class="form-control">
-                            </div>
                             <div class="form-group">
                                 <label for="">Nama Depan</label>
                                 <input type="text" value="{{ $val->nama_depan }}" name="nama_depan" id="nama_depan" class="form-control input-sm" required>
@@ -192,8 +213,8 @@
         }
         $('#user_id2').typeahead({
             source: [
-                @foreach($user as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                @foreach($siswa as $value)
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
                 @endforeach
             ],
             onSelect: displayResult

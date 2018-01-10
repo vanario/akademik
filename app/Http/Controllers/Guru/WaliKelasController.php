@@ -15,7 +15,7 @@ class WaliKelasController extends Controller
 {
     public function index()
     {
-    	$data = WaliKelas::paginate(10);
+    	$data = WaliKelas::orderBy('id','DESC')->paginate(10);
 
     	$guru 		= DataGuru::pluck('nama_depan','id')->all();
     	$kelas 		= Ref_Kelas::pluck('nama','id')->all();
