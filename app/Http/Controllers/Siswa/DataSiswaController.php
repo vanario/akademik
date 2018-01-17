@@ -20,8 +20,7 @@ class DataSiswaController extends Controller
             }                      
             $data = $query->paginate(10);
         
-        $user   = User::get();
-        $siswa  = DataSiswa::get(); 
+        $user   = User::where('level',4)->get();
 
     	return view('siswa/data-siswa.index',compact('data','user','siswa'));
     }
@@ -56,10 +55,9 @@ class DataSiswaController extends Controller
 
     public function update(Request $request,$id)
     {
-        if ($request->input('user_id') != null) {            
+                  
                      
          $data = [
-                    'user_id'           => $request->input('user_id2'),
                     'nama_depan'        => $request->input('nama_depan'),
                     'nama_belakang'     => $request->input('nama_belakang'),
                     'alamat'            => $request->input('alamat'),
@@ -67,14 +65,7 @@ class DataSiswaController extends Controller
                     'no_telp_wali_murid'=> $request->input('no_telp_wali_murid'),
                     'alamat_wali_mulid' => $request->input('alamat_wali_murid'),
                  ];
-         }
-
-        else {
-            alert()->error('');
-            Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
-            return redirect()->route('data-siswa.index');
-        }
-
+        
     	DataSiswa::find($id)->update($data, $request->all());
 
         alert()->success('');

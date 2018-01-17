@@ -38,7 +38,8 @@
                                 <td>{{ $val->alamat or "-"}}</td>
                                 <td>{{ $val->no_telp or "-"}}</td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>      
+                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>
+                                    <a href="{{url('data-guru/detail', $val->id)}}"><i class="fa fa-eye"></i></a>      
                                     <a href="{{action('Guru\DataGuruController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -117,8 +118,7 @@
                                  <span class="text-danger">{{ $errors->first('nip') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="">Nama</label>
-                                <input type="text" name="user_id" id="user_id2" value="{{ $val->user->name or "-" }}" class="form-control" placeholder="Nama" autocomplete="off" required>
+                                <input type="hidden" name="user_id" id="user_id2" value="{{ $val->user->name or "-" }}" class="form-control" placeholder="Nama" autocomplete="off" required>
                                 <input type="hidden" value="{{ $val->user_id }}" name="user_id2" id="userValue2" class="form-control">
                             </div>
                             <div class="form-group">
@@ -136,6 +136,16 @@
                             <div class="form-group">
                                 <label for="">No Telepon</label>
                                 <input type="text" value="{{ $val->no_telp }}" name="no_telp" id="no_telp" class="form-control input-sm" required>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                  Wali Kelas : 
+                                </label>
+                                @if($val->user->wali_kelas == "TRUE")
+                                    <input type="checkbox" name="waliKelas" value="1" checked>
+                                @else
+                                    <input type="checkbox" name="waliKelas" value="0">
+                                @endif
                             </div>
                         </div>
                         <div class="modal-footer">

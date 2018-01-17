@@ -213,8 +213,8 @@
         }
         $('#user_id2').typeahead({
             source: [
-                @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                @foreach($user as $value)
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -222,8 +222,6 @@
     });
 
 </script>
-
-
 @endsection
 
 

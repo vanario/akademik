@@ -28,8 +28,10 @@
 
         <li class="header">Menu</li>
         
-        
+           @if (!Auth::check() || Auth::user()->level == '1')
+
             <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>Guru</span>
@@ -53,11 +55,28 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('data-siswa') }}"><i class="fa fa-circle-o"></i>Data siswa</a></li>
-                    <li><a href="{{ url('nilai') }}"><i class="fa fa-circle-o"></i>Nilai</a></li>
                     <li><a href="{{ url('presensi') }}"><i class="fa fa-circle-o"></i>Presensi</a></li>
                 </ul>
             </li>
-            <li><a href="{{ url('data-master') }}"><i class="fa fa-circle-o"></i> Data Mater</a></li>      
+
+            <li><a href="{{ url('data-master') }}"><i class="fa fa-circle-o"></i> Data Mater</a></li> 
+            <li><a href="{{ url('register/index') }}"><i class="fa fa-circle-o"></i> Register</a></li>
+          @endif
+
+          {{-- Wali kelas --}}
+          @if (!Auth::check() || Auth::user()->wali_kelas == 'TRUE')
+            <li><a href="{{ url('wali-nilai/index') }}"><i class="fa fa-circle-o"></i>Nilai Rekap</a></li>
+          @endif
+
+          {{-- Guru --}}
+          @if (!Auth::check() || Auth::user()->level == '3')
+            <li><a href="{{ url('nilai') }}"><i class="fa fa-circle-o"></i>Nilai Mata Pelajaran</a></li>
+          @endif
+
+          @if (!Auth::check() || Auth::user()->level == '4')
+            <li><a href="{{ url('nilai-siswa/index') }}"><i class="fa fa-circle-o"></i>Nilai Mata Pelajaran</a></li>
+          @endif     
+
        
 
       </ul>

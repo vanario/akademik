@@ -31,7 +31,7 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
-                                <td>{{ $val->guru->nama_depan or "-" }}</td>
+                                <td>{{ $val->guru->name or "-" }}</td>
                                 <td>{{ $val->mapel->nama or "-"}}</td>
                                 <td>{{ $val->kelas->nama or "-"}}</td>
                                 <td>{{ $val->semester->semester or "-"}}</td>
@@ -64,13 +64,9 @@
                         </div>
                         <div class="modal-body">                                       
                             <div class="form-group">
-                                <label for="">Guru</label>
-                                <select  name="guru_id" class="form-control" required>
-                                    <option value="">Pilih </option>
-                                    @foreach($guru as $id => $nama_depan)
-                                        <option value="{{$id}}">{{$nama_depan}}</option>
-                                    @endforeach
-                                </select>
+                                <label for="">Nama</label>
+                                <input type="text" name="guru_id" id="guru_id" class="form-control" autocomplete="off" required>
+                                <input type="hidden" name="guru_id" id="userValue" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
@@ -135,15 +131,6 @@
                         </div>
                         <div class="modal-body">                                         
                             <div class="form-group">
-                                <label for="">Guru</label>
-                                <select  name="guru_id" class="form-control" required>
-                                    <option value="">Pilih </option>
-                                    @foreach($guru as $id => $nama_depan)
-                                        <option value="{{ $id }}" {{old('id',$id)==$val->guru_id? 'selected':''}}>{{ $nama_depan }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
                                 <select  name="mapel_id" class="form-control" required>
                                     <option value="">Pilih Mata Pelajaran</option>
@@ -205,6 +192,40 @@
 <script src="{{ asset('adminlte/bower_components/bootstrap-typeahead.js') }}"></script>  
 <script src="{{ asset('adminlte/bower_components/jquery.mockjax.js') }}"></script>  
 <script src="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+<script type="text/javascript">
+    $(function() {
+        function displayResult(item) {            
+            $("#userValue").val(item.value);
+        }
+        $('#guru_id').typeahead({
+            source: [
+                @foreach($guru as $value)
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                @endforeach
+            ],
+            onSelect: displayResult
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        function displayResult(item) {            
+            $("#userValue2").val(item.value);
+        }
+        $('#guru_id2').typeahead({
+            source: [
+                @foreach($guru as $value)
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                @endforeach
+            ],
+            onSelect: displayResult
+        });
+    });
+
+</script>
 
 @endsection
 

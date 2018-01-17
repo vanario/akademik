@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pengampu;
 use App\Models\DataGuru;
+use App\Models\User;
 use App\Models\Ref_Mapel;
 use App\Models\Ref_Kelas;
 use App\Models\Ref_TahunAjar;
@@ -18,7 +19,7 @@ class PengampuController extends Controller
     {
     	$data = Pengampu::orderBy('id','DESC')->paginate(10);
 
-    	$guru 		= DataGuru::pluck('nama_depan','id')->all();
+    	$guru 		= User::where('level',3)->get();
     	$mapel 		= Ref_Mapel::pluck('nama','id')->all();
     	$kelas 		= Ref_Kelas::pluck('nama','id')->all();
     	$semesters  = Ref_Semester::pluck('semester','id')->all();

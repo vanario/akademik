@@ -86,7 +86,7 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
-                                <td>{{ $val->siswa->nama_depan or "-"}}</td>
+                                <td>{{ $val->siswa->name or "-"}}</td>
                                 <td>{{ $val->alpa or "-"}}</td>
                                 <td>{{ $val->sakit or "-"}}</td>
                                 <td>{{ $val->izin or "-"}}</td>
@@ -264,7 +264,7 @@
         $('#siswa_id').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -281,7 +281,7 @@
         $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
                 @endforeach
             ],
             onSelect: displayResult

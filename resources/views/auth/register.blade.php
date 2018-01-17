@@ -88,6 +88,16 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
                     @endif
                 </div>
 
+                <div class="form-group">
+                    <select name="level" id="level" class="form-control" data-placeholder="Select a State" required>
+                        <option value="">Pilih Akses User</option>
+                        <option value="1">Tata Usaha</option>
+                        <option value="2">Wali kelas</option>
+                        <option value="3">Guru</option>
+                        <option value="4">Siswa</option>
+                    </select>
+                </div>                
+
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <input id="password" type="password" placeholder="Password" class="form-control" name="password" required>
 

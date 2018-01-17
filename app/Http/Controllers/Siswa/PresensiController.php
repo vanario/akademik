@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Siswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Presensi;
-use App\Models\DataSiswa;
+use App\Models\User;
 use App\Models\Ref_Kelas;
 use App\Models\Ref_Semester;
 use App\Models\Ref_TahunAjar;
@@ -15,7 +15,7 @@ class PresensiController extends Controller
 {
     public function index(Request $request)
     {
-    	$siswa      = DataSiswa::get();
+    	$siswa      = User::where('level',4)->get();
 
         $query = Presensi::query();
 
@@ -72,11 +72,7 @@ class PresensiController extends Controller
 
     public function update(Request $request,$id)
     {
-     	// return $request;  
-        if ($request->input('siswa_id2') != null) {            
-                     
          $data = [
-                    'siswa_id'          => $request->input('siswa_id2'),
                     'alpa'	    		=> $request->input('alpa'),
                     'sakit'	    		=> $request->input('sakit'),
                     'izin'			    => $request->input('izin'),
@@ -85,14 +81,7 @@ class PresensiController extends Controller
                     'semeseter_id'      => $request->input('semester_id'),                    
                     'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),  
                  ];
-         }
-
-        else {
-            alert()->error('');
-            Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
-            return redirect()->route('presensi.index');
-        }
-
+         
     	Presensi::find($id)->update($data, $request->all());
 
         alert()->success('');

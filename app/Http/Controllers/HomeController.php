@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Slider;
+use App\Models\WaliKelas;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Slider::get();
+        $data       = Slider::get();
+        $user       = Auth::user();
 
         return view('home', compact('data'));
     }

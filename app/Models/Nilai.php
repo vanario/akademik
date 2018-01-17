@@ -12,7 +12,7 @@ class Nilai extends Model
 
   	public function siswa()
   	{
-  		return $this->hasOne(DataSiswa::class,'id', 'siswa_id');
+  		return $this->hasOne(User::class,'id', 'siswa_id');
   	}
 
   	public function mapel()
