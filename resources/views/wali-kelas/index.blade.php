@@ -5,15 +5,15 @@
 
 <div class="row">
     <section class="content">
-        <form method="POST" action="{{ url('presensi') }}">
+        <form method="POST" action="{{-- {{ url('wali_kelas') }} --}}">
             {{ csrf_field() }}
             <div class="report-list">
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" name="user_id" id="user_id2" class="form-control" placeholder="Nama" autocomplete="off">
-                            <input type="hidden" name="user_id2" id="userValue2" class="form-control">
+                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="Nama" autocomplete="off">
+                            <input type="hidden" name="user_id" id="userValue" class="form-control">
                         </div>
                     </div>                            
                     <div class="col-sm-2">
@@ -98,8 +98,8 @@
                                 @endif
                         </tbody>
                     </table>
-                {{$data->render()}}
-            </div>
+            {{$data->render()}}
+        </div>
     </section>
 </div>
 
@@ -113,9 +113,9 @@
 <script type="text/javascript">
     $(function() {
         function displayResult(item) {            
-            $("#siswaValue").val(item.value);
+            $("#userValue").val(item.value);
         }
-        $('#siswa_id').typeahead({
+        $('#user_id').typeahead({
             source: [
                 @foreach($siswa as $value)
                     { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
@@ -126,22 +126,5 @@
     });
 
 </script>
-
-<script type="text/javascript">
-    $(function() {
-        function displayResult(item) {            
-            $("#userValue2").val(item.value);
-        }
-        $('#user_id2').typeahead({
-            source: [
-                @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
-                @endforeach
-            ],
-            onSelect: displayResult
-        });
-    });
-
-</script>
-
+@endsection
 @endsection

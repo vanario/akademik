@@ -10,7 +10,11 @@ class WaliKelas extends Model
 
   	protected $guarded = [];
 
-  	public function guru()
+  	public function user()
+    {
+      return $this->hasOne(User::class,'id', 'guru_id');
+    }
+    public function guru()
   	{
   		return $this->hasOne(User::class,'id', 'guru_id');
   	}

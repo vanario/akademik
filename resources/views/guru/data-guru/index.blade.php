@@ -137,16 +137,6 @@
                                 <label for="">No Telepon</label>
                                 <input type="text" value="{{ $val->no_telp }}" name="no_telp" id="no_telp" class="form-control input-sm" required>
                             </div>
-                            <div class="form-group">
-                                <label>
-                                  Wali Kelas : 
-                                </label>
-                                @if($val->user->wali_kelas == "TRUE")
-                                    <input type="checkbox" name="waliKelas" value="1" checked>
-                                @else
-                                    <input type="checkbox" name="waliKelas" value="0">
-                                @endif
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <div>

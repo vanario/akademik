@@ -58,6 +58,9 @@ class DataGuruController extends Controller
 
             DataGuru::create($data, $request->all());
 
+            $dataWali = ['wali_kelas' => $request->input('waliKelas')];
+            User::find($request->input('user_id2'))->update($dataWali, $request->all());
+
             alert()->success('');
             Alert::success('Data berhasil ditambah', 'Sukses');
             return redirect()->route('data-guru.index');

@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label for="">Keterangan</label>
                                 <input type="text" name="keterangan" id="keterangan" class="form-control input-sm" required>
-                            </div>                                                       
+                            </div>                                                                                     
                         </div>
                         <div class="modal-footer">
                             <div>
@@ -116,18 +116,13 @@
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PATCH">
                         <div class="modal-header">
-                            <h4>Edit Data Wali-Kelas</h4>
+                            <h4>Edit Data Wali-Kelas : {{ $val->user->name or "-" }}</h4>
                         </div>
-                        <div class="modal-body">                                         
+                        <div class="modal-body">
                             <div class="form-group">
-                                <label for="">Guru</label>
-                                <select  name="guru_id" class="form-control" required>
-                                    <option value="">Pilih </option>
-                                    @foreach($guru as $id => $nama_depan)
-                                        <option value="{{ $id }}" {{old('id',$id)==$val->guru_id? 'selected':''}}>{{ $nama_depan }}</option>
-                                    @endforeach
-                                </select>
-                            </div>                            
+                                <input type="hidden" name="guru_id" id="guru_id2" value="{{ $val->user->name or "-" }}"class="form-control" autocomplete="off" required>
+                                <input type="hidden" value="{{ $val->guru_id }}" name="guru_id2" id="userValue2" class="form-control">
+                            </div>                                         
                             <div class="form-group">
                                 <label for="">Kelas</label>
                                 <select  name="kelas_id" class="form-control" required>
@@ -188,6 +183,23 @@
             $("#userValue").val(item.value);
         }
         $('#guru_id').typeahead({
+            source: [
+                @foreach($guru as $value)
+                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                @endforeach
+            ],
+            onSelect: displayResult
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        function displayResult(item) {            
+            $("#userValue2").val(item.value);
+        }
+        $('#guru_id2').typeahead({
             source: [
                 @foreach($guru as $value)
                     { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },

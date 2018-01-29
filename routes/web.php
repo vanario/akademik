@@ -16,6 +16,13 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'sms-gateway', 'middleware' => ['web','guru:3']], function() {
+
+    Route::get('index', 'SmsGateway\SmsGatewayController@index')->name('sms-gateway.index');
+    Route::match(['get','post'],'send', 'SmsGateway\SmsGatewayController@send');
+     
+  });
+
 Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], function() {
 
      Route::get('/','Guru\DataGuruController@index')->name('data-guru.index');
@@ -35,7 +42,7 @@ Route::group(['prefix' => 'pengampu', 'middleware' => ['web','level:1']], functi
 
 Route::group(['prefix' => 'wali-kelas', 'middleware' => ['web','level:1']], function() {
 
-     Route::get('/','Guru\WaliKelasController@index')->name('wali-kelas.index');
+     Route::match(['get','post'],'/','Guru\WaliKelasController@index')->name('wali-kelas.index');
      Route::post('store','Guru\WaliKelasController@store')->name('wali-kelas.store');
      Route::match(['put','patch'],'update/{id}','Guru\WaliKelasController@update')->name('wali-kelas.update');
      Route::get('delete/{id}', 'Guru\WaliKelasController@destroy')->name('wali-kelas.delete');
