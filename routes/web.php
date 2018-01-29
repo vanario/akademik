@@ -65,6 +65,22 @@ Route::group(['prefix' => 'presensi', 'middleware' => ['web','level:1']], functi
      Route::get('delete/{id}', 'Siswa\PresensiController@destroy')->name('presensi.delete');
   });
 
+Route::group(['prefix' => 'ahlak', 'middleware' => ['web','level:1']], function() {
+
+     Route::match(['get','post'],'/','Siswa\AhlakController@index')->name('ahlak.index');
+     Route::post('store','Siswa\AhlakController@store')->name('ahlak.store');
+     Route::match(['put','patch'],'update/{id}','Siswa\AhlakController@update')->name('ahlak.update');
+     Route::get('delete/{id}', 'Siswa\AhlakController@destroy')->name('ahlak.delete');
+  });
+
+Route::group(['prefix' => 'ekstrak', 'middleware' => ['web','level:1']], function() {
+
+     Route::match(['get','post'],'/','Siswa\EkstrakurikulerController@index')->name('ekstrak.index');
+     Route::post('store','Siswa\EkstrakurikulerController@store')->name('ekstrak.store');
+     Route::match(['put','patch'],'update/{id}','Siswa\EkstrakurikulerController@update')->name('ekstrak.update');
+     Route::get('delete/{id}', 'Siswa\EkstrakurikulerController@destroy')->name('ekstrak.delete');
+  });
+
 Route::get('data-master', function () {
     return view('data-master/index');
 });
