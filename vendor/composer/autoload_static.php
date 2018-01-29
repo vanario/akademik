@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2
+class ComposerStaticInit479e484674d7f9f4f7f5298813943780
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -12,8 +12,8 @@ class ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'a806c12c6e24e7e4e900847766218dba' => __DIR__ . '/..' . '/uxweb/sweet-alert/src/SweetAlert/functions.php',
@@ -114,8 +114,8 @@ class ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -332,17 +332,22 @@ class ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2
         'App\\Http\\Controllers\\Master\\SemesterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/SemesterController.php',
         'App\\Http\\Controllers\\Master\\SliderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/SliderController.php',
         'App\\Http\\Controllers\\Master\\TahunAjarController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/TahunAjarController.php',
+        'App\\Http\\Controllers\\NilaiSiswa\\NilaiSiswaController' => __DIR__ . '/../..' . '/app/Http/Controllers/NilaiSiswa/NilaiSiswaController.php',
         'App\\Http\\Controllers\\RegisterUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegisterUserController.php',
         'App\\Http\\Controllers\\Siswa\\DataSiswaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Siswa/DataSiswaController.php',
         'App\\Http\\Controllers\\Siswa\\NilaiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Siswa/NilaiController.php',
         'App\\Http\\Controllers\\Siswa\\PresensiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Siswa/PresensiController.php',
+        'App\\Http\\Controllers\\WaliKelas\\WaliKelasController' => __DIR__ . '/../..' . '/app/Http/Controllers/WaliKelas/WaliKelasController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
+        'App\\Http\\Middleware\\GuruMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/GuruMiddleware.php',
         'App\\Http\\Middleware\\LevelMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/LevelMiddleware.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\SiswaMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/SiswaMiddleware.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Middleware\\WaliMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/WaliMiddleware.php',
         'App\\Models\\Classes' => __DIR__ . '/../..' . '/app/Models/Classes.php',
         'App\\Models\\DataGuru' => __DIR__ . '/../..' . '/app/Models/DataGuru.php',
         'App\\Models\\DataSiswa' => __DIR__ . '/../..' . '/app/Models/DataSiswa.php',
@@ -3665,10 +3670,10 @@ class ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit85fef263cb485c1f4ddc81caa4bfbfc2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit479e484674d7f9f4f7f5298813943780::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit479e484674d7f9f4f7f5298813943780::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit479e484674d7f9f4f7f5298813943780::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit479e484674d7f9f4f7f5298813943780::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -35,11 +35,7 @@ class DataGuruController extends Controller
 
     public function store(Request $request)
     {   
-        $this->validate($request, [
-
-            'nip' => 'required|numeric'
-
-            ]);
+        $this->validate($request, ['nip' => 'required|numeric']);
 
         if ($request->input('user_id') != null) {            
                      

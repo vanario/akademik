@@ -70,8 +70,8 @@
                                 <span class="text-danger">{{ $errors->first('nip') }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="">Nama</label>
-                                <input type="text" name="user_id" id="user_id" class="form-control" autocomplete="off" required>
+                                <label for="">User</label>
+                                <input type="text" id="user_id" class="form-control" autocomplete="off" required>
                                 <input type="hidden" name="user_id" id="userValue" class="form-control">
                             </div>
                             <div class="form-group">
