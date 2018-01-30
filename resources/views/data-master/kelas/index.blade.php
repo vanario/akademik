@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Kode Kelas</th>
                                 <th>Nama</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
@@ -28,6 +29,7 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
+                                <td>{{ $val->kode_kelas or "-" }}</td>
                                 <td>{{ $val->nama or "-" }}</td>
                                 <td>{{ $val->keterangan or "-"}}</td>
                                 <td>
@@ -56,6 +58,10 @@
                             <h4>Tambah Kelas</h4>
                         </div>
                         <div class="modal-body">                                       
+                            <div class="form-group">
+                                <label for="">Kode Kelas</label>
+                                <input type="text" name="kode_kelas" id="kode_kelas" class="form-control input-sm" required>
+                            </div>                              
                             <div class="form-group">
                                 <label for="">Nama</label>
                                 <input type="text" name="nama" id="nama" class="form-control input-sm" required>
@@ -86,6 +92,10 @@
                             <h4>Edit Kelas</h4>
                         </div>
                         <div class="modal-body">                                         
+                            <div class="form-group">
+                                <label for="">Kode Kelas</label>
+                                <input type="text" name="kode_kelas" value="{{$val->kode_kelas}}" id="kode_kelas" class="form-control input-sm" required>
+                            </div>                                
                             <div class="form-group">
                                 <label for="">Nama</label>
                                 <input type="text" name="nama" value="{{$val->nama}}" id="nama" class="form-control input-sm" required>

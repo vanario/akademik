@@ -56,10 +56,10 @@ class DataGuruController extends Controller
             return redirect()->route('data-guru.index');
         }
 
-            DataGuru::create($data, $request->all());
 
             $dataWali = ['wali_kelas' => $request->input('waliKelas')];
-            User::find($request->input('user_id2'))->update($dataWali, $request->all());
+            User::find($request->input('user_id'))->update($dataWali, $request->all());
+            DataGuru::create($data, $request->all());
 
             alert()->success('');
             Alert::success('Data berhasil ditambah', 'Sukses');
