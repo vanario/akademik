@@ -65,9 +65,7 @@ class DataSiswaController extends Controller
     }
 
     public function update(Request $request,$id)
-    {
-                  
-                     
+    {                               
          $data = [
                     'nama_depan'        => $request->input('nama_depan'),
                     'nis'               => $request->input('nis'),

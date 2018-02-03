@@ -216,7 +216,7 @@
                 <div class="modal-content">
                     <form method="POST" action="{{ route('data-siswa.update',$val->id) }}" >
                     {{ csrf_field() }}
-                    <input name="_method" type="hidden" value="PATCH">
+                        <input name="_method" type="hidden" value="PATCH">
                         <div class="modal-header">
                             <h4>Edit Data Siswa</h4>
                         </div>
