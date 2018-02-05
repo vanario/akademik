@@ -585,3 +585,45 @@ footer{
     margin-right: 10px;
     font-size:14px;
 }
+
+.header-table {
+    text-align: center;
+    border-bottom: 1px solid #4d4d4d;
+    text-transform: uppercase;
+    color: #4d4d4d;
+    width: 100%;
+    height: 180px;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+.header-table h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.header-table-right,
+.header-table-left {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.header-table-left {
+    width: 50%;
+    float: left;
+}
+.header-table-left table,
+.header-table-right table {
+    width: 100%;
+    margin-left: 10px;
+}
+
+.header-table-right {
+    width: 50%;
+    float: left;
+}
+
+.header-table table>tbody>tr>td {
+    text-align: left;
+    font-size: 14px;
+    text-transform: none;
+    padding-bottom: 10px;
+}

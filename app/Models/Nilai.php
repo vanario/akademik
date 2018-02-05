@@ -15,6 +15,11 @@ class Nilai extends Model
   		return $this->hasOne(User::class,'id', 'siswa_id');
   	}
 
+    public function data_siswa()
+    {
+      return $this->hasOne(DataSiswa::class,'user_id', 'siswa_id');
+    }
+
   	public function mapel()
   	{
   		return $this->hasOne(Ref_Mapel::class,'id', 'mata_pelajaran_id');

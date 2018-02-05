@@ -142,8 +142,9 @@ Route::group(['prefix' => 'register', 'middleware' => ['web','level:1']], functi
 
 Route::group(['prefix' => 'wali-nilai', 'middleware' => ['web','guru:3']], function() {
 
-     Route::get('index','WaliKelas\WaliKelasController@index')->name('wali-nilai.index');     
-     Route::get('detail/{id}','WaliKelas\WaliKelasController@detail')->name('wali-nilai.detail');     
+     Route::match(['get','post'],'index','WaliKelas\WaliKelasController@index')->name('wali-nilai.index');     
+     Route::match(['get','post'],'print','WaliKelas\WaliKelasController@print')->name('wali-nilai.print');        
+     Route::match(['get','post'],'nilaipdf','WaliKelas\WaliKelasController@pdf')->name('wali-nilai.nilaipdf');    
   });
 
 Route::group(['prefix' => 'nilai-siswa', 'middleware' => ['web','siswa:4']], function() {
