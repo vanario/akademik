@@ -16,12 +16,14 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'sms-gateway', 'middleware' => ['web','guru:3']], function() {
-
+Route::group(['prefix' => 'sms-gateway'], function() {
     Route::get('index', 'SmsGateway\SmsGatewayController@index')->name('sms-gateway.index');
-    Route::match(['get','post'],'send', 'SmsGateway\SmsGatewayController@send');
-     
-  });
+    Route::match(['get','post'],'send', 'SmsGateway\SmsGatewayController@send');     
+});
+
+Route::group(['prefix' => 'kenaikan-kelas-siswa'], function() {
+    Route::get('index', 'Siswa\SiswaHasKelasController@index')->name('siswa-has-kelas.index');
+});
 
 Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], function() {
 
