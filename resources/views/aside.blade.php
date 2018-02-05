@@ -73,7 +73,8 @@
 
           {{-- Guru --}}
           @if (!Auth::check() || Auth::user()->level == '3')
-            <li><a href="{{ url('nilai') }}"><i class="fa fa-circle-o"></i>Nilai Mata Pelajaran</a></li>
+            <li><a href="{{ url('nilai') }}"><i class="fa fa-circle-o"></i>Nilai Mata Pelajaran</a>
+              <li><a href="{{ url('nilai/pdfprint') }}"><i class="fa fa-circle-o"></i>Print Nilai Mata Pelajaran</a></li></li>
           @endif
 
           @if (!Auth::check() || Auth::user()->level == '4')

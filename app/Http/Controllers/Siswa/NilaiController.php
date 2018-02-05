@@ -14,6 +14,7 @@ use App\Models\Ref_TahunAjar;
 use App\Models\Ref_Semester;
 use Auth;
 use Alert;
+use PDF;
 
 class NilaiController extends Controller
 {
@@ -48,6 +49,48 @@ class NilaiController extends Controller
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
         return view('siswa/nilai.index',compact('data','user','mapel','semesters','tahunajar', 'kelas'));
+    }
+
+    public function print()
+    {
+        $mapel_id = $this->Pengampu();
+
+        $siswa      = User::where('level', 4)->get();
+        $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
+        $kelas      = Ref_Kelas::pluck('nama','id')->all();
+        $semesters  = Ref_Semester::pluck('semester','id')->all();
+        $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
+
+        return view('siswa/nilai.pdfprint',compact('data','user','mapel','semesters','tahunajar', 'kelas','siswa'));
+    }
+
+    public function pdf(Request $request)
+    {
+        $mapel_id = $this->Pengampu();
+
+        $query = Nilai::query();
+
+        if($request->input('user_id')) {
+            $query->where('siswa_id', $request->input('user_id'));
+        }
+        if($request->input('mata_pelajaran_id')) {
+            $query->where('mata_pelajaran_id', $request->input('mata_pelajaran_id'));
+        }
+        if($request->input('kelas_id')) {
+            $query->where('kelas_id', $request->input('kelas_id'));
+        }
+        if($request->input('tahun_ajaran_id')) {
+            $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
+        }
+        if($request->input('semester_id')) {
+            $query->where('semeseter_id', $request->input('semester_id'));
+        }
+            
+        $data   = $query->whereIn('mata_pelajaran_id',$mapel_id)->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
+
+        $pdf = PDF::loadView('siswa/nilai.pdf',compact('value','data','user','mapels','semesters','tahunajar', 'kelas','siswa'))->setPaper('letter', 'landscape');
+            
+        return $pdf->stream();     
     }
 
     public function Pengampu()
