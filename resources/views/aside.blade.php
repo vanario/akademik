@@ -68,6 +68,7 @@
           {{-- Wali kelas --}}
           @if (!Auth::check() || Auth::user()->wali_kelas == 'TRUE')
             <li><a href="{{ url('wali-nilai/index') }}"><i class="fa fa-circle-o"></i>Nilai Rekap</a></li>
+            <li><a href="{{ url('wali-nilai/print') }}"><i class="fa fa-circle-o"></i>Print Nilai Rekap</a></li>
           @endif
 
           {{-- Guru --}}

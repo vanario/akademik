@@ -22,7 +22,8 @@ Route::group(['prefix' => 'sms-gateway'], function() {
 });
 
 Route::group(['prefix' => 'kenaikan-kelas-siswa'], function() {
-    Route::get('index', 'Siswa\SiswaHasKelasController@index')->name('siswa-has-kelas.index');
+    Route::match(['get','post'], 'index', 'Siswa\SiswaHasKelasController@index')->name('siswa-has-kelas.index');
+    Route::post('/create', 'Siswa\SiswaHasKelasController@store')->name('siswa-has-kelas.store');;
 });
 
 Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], function() {
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], funct
      Route::post('store','Guru\DataGuruController@store')->name('data-guru.store');
      Route::match(['put','patch'],'update/{id}','Guru\DataGuruController@update')->name('data-guru.update');
      Route::get('delete/{id}', 'Guru\DataGuruController@destroy')->name('data-guru.delete');
-  });
+});
 
 Route::group(['prefix' => 'pengampu', 'middleware' => ['web','level:1']], function() {
 
@@ -144,8 +145,9 @@ Route::group(['prefix' => 'register', 'middleware' => ['web','level:1']], functi
 
 Route::group(['prefix' => 'wali-nilai', 'middleware' => ['web','guru:3']], function() {
 
-     Route::get('index','WaliKelas\WaliKelasController@index')->name('wali-nilai.index');     
-     Route::get('detail/{id}','WaliKelas\WaliKelasController@detail')->name('wali-nilai.detail');     
+     Route::match(['get','post'],'index','WaliKelas\WaliKelasController@index')->name('wali-nilai.index');     
+     Route::match(['get','post'],'print','WaliKelas\WaliKelasController@print')->name('wali-nilai.print');        
+     Route::match(['get','post'],'nilaipdf','WaliKelas\WaliKelasController@pdf')->name('wali-nilai.nilaipdf');    
   });
 
 Route::group(['prefix' => 'nilai-siswa', 'middleware' => ['web','siswa:4']], function() {

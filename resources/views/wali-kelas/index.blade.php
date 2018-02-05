@@ -5,11 +5,11 @@
 
 <div class="row">
     <section class="content">
-        <form method="POST" action="{{-- {{ url('wali_kelas') }} --}}">
+        <form method="POST" action="{{ url('wali-nilai/index') }}">
             {{ csrf_field() }}
             <div class="report-list">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="">Nama</label>
                             <input type="text" name="user_id" id="user_id" class="form-control" placeholder="Nama" autocomplete="off">
@@ -49,11 +49,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="">Aksi</label>
-                            <button type="submit" class="btn btn-green btn-block">Filter</button>
-                        </div>
+                                <button type="submit" name="action" class="btn btn-green btn-block" value="filter">Filter</button>
+                        </div> 
                     </div>
                 </div>
             </div>

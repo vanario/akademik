@@ -15,10 +15,10 @@ class NilaiSiswaController extends Controller
 
         $data = Nilai::with('siswa','mapel')->where('siswa_id',$siswa_id)->paginate(10);
 
-            $pelajaran = array();
-            foreach ($data as $value) {
-            	$pelajaran[] = $value->mata_pelajaran_id;
-            }
+        $pelajaran = array();
+        foreach ($data as $value) {
+        	$pelajaran[] = $value->mata_pelajaran_id;
+        }
 
         // $mapels     = Ref_Mapel::whereIn('id', $pelajaran)->orderBy('id','DESC')->get();
         // $kelas      = Ref_Kelas::pluck('nama','id')->all();
