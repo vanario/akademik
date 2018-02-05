@@ -16,12 +16,15 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'sms-gateway', 'middleware' => ['web','guru:3']], function() {
-
+Route::group(['prefix' => 'sms-gateway'], function() {
     Route::get('index', 'SmsGateway\SmsGatewayController@index')->name('sms-gateway.index');
-    Route::match(['get','post'],'send', 'SmsGateway\SmsGatewayController@send');
-     
-  });
+    Route::match(['get','post'],'send', 'SmsGateway\SmsGatewayController@send');     
+});
+
+Route::group(['prefix' => 'kenaikan-kelas-siswa'], function() {
+    Route::match(['get','post'], 'index', 'Siswa\SiswaHasKelasController@index')->name('siswa-has-kelas.index');
+    Route::post('/create', 'Siswa\SiswaHasKelasController@store')->name('siswa-has-kelas.store');;
+});
 
 Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], function() {
 
@@ -30,7 +33,7 @@ Route::group(['prefix' => 'data-guru', 'middleware' => ['web','level:1']], funct
      Route::post('store','Guru\DataGuruController@store')->name('data-guru.store');
      Route::match(['put','patch'],'update/{id}','Guru\DataGuruController@update')->name('data-guru.update');
      Route::get('delete/{id}', 'Guru\DataGuruController@destroy')->name('data-guru.delete');
-  });
+});
 
 Route::group(['prefix' => 'pengampu', 'middleware' => ['web','level:1']], function() {
 
