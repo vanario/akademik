@@ -44,11 +44,12 @@ class NilaiController extends Controller
 
         $user       = User::where('level',4)->get();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
+        $mapel2      = Ref_Mapel::pluck('nama','id')->all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-        return view('siswa/nilai.index',compact('data','user','mapel','semesters','tahunajar', 'kelas'));
+        return view('siswa/nilai.index',compact('data','user','mapel','semesters','tahunajar', 'kelas', 'mapel2'));
     }
 
     public function print()
