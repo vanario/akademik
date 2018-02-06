@@ -40,7 +40,7 @@ class NilaiController extends Controller
                 $query->where('semeseter_id', $request->input('semester_id'));
             }
             
-            $data = $query->whereIn('mata_pelajaran_id',$mapel_id)->orderBy('id','DESC')->paginate(10);
+            $data = $query->orderBy('id','DESC')->paginate(10);
 
         $user       = User::where('level',4)->get();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
@@ -86,7 +86,7 @@ class NilaiController extends Controller
             $query->where('semeseter_id', $request->input('semester_id'));
         }
             
-        $data   = $query->whereIn('mata_pelajaran_id',$mapel_id)->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
+        $data   = $query->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
 
         $pdf = PDF::loadView('siswa/nilai.pdf',compact('value','data','user','mapels','semesters','tahunajar', 'kelas','siswa'))->setPaper('letter', 'landscape');
             
