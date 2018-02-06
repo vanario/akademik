@@ -17,7 +17,7 @@ class PengampuController extends Controller
 {
     public function index()
     {
-    	$data = Pengampu::orderBy('id','DESC')->paginate(10);
+    	$data = Pengampu::with('guru')->orderBy('id','DESC')->paginate(10);
 
     	$guru 		= User::where('level',3)->get();
     	$mapel 		= Ref_Mapel::pluck('nama','id')->all();

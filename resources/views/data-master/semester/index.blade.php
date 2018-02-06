@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Kode Semester</th>
                                 <th>Nama</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
@@ -28,6 +29,7 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
+                                <td>{{ $val->kode_semester or "-" }}</td>
                                 <td>{{ $val->semester or "-" }}</td>
                                 <td>{{ $val->keterangan or "-"}}</td>
                                 <td>
@@ -57,6 +59,10 @@
                         </div>
                         <div class="modal-body">                                       
                             <div class="form-group">
+                                <label for="">Kode Semester</label>
+                                <input type="text" name="kode_semester" id="kode_semester" class="form-control input-sm" required>
+                            </div>                            
+                            <div class="form-group">
                                 <label for="">Semester</label>
                                 <input type="text" name="semester" id="semester" class="form-control input-sm" required>
                             </div>
@@ -85,7 +91,11 @@
                         <div class="modal-header">
                             <h4>Edit Semester</h4>
                         </div>
-                        <div class="modal-body">                                         
+                        <div class="modal-body">                                                                 
+                            <div class="form-group">
+                                <label for="">Kode Semester</label>
+                                <input type="text" name="kode_semester" id="kode_semester" value="{{ $val->kode_semester }}" class="form-control input-sm" required>
+                            </div>                                         
                             <div class="form-group">
                                 <label for="">Nama</label>
                                 <input type="text" name="semester" value="{{$val->semester}}" id="semester" class="form-control input-sm" required>

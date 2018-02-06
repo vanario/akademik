@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>NIP</th>
                                 <th>Guru</th>
                                 <th>Mata Pelajaran</th>
                                 <th>Kelas</th>
@@ -31,7 +32,8 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
-                                <td>{{ $val->guru->name or "-" }}</td>
+                                <td>{{ $val->guru->nip or "-" }}</td>
+                                <td>{{ $val->guru->nama_depan or "-" }} {{ $val->guru->nama_belakang or "-" }}</td>
                                 <td>{{ $val->mapel->nama or "-"}}</td>
                                 <td>{{ $val->kelas->nama or "-"}}</td>
                                 <td>{{ $val->semester->semester or "-"}}</td>

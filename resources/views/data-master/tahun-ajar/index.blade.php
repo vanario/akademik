@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Kode Tahun Ajaran</th>
                                 <th>Nama</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
@@ -28,6 +29,7 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
+                                <td>{{ $val->kode_tahun_ajaran or "-" }}</td>
                                 <td>{{ $val->tahun_ajaran or "-" }}</td>
                                 <td>{{ $val->keterangan or "-"}}</td>
                                 <td>
@@ -56,6 +58,10 @@
                             <h4>Tambah Kelas</h4>
                         </div>
                         <div class="modal-body">                                       
+                            <div class="form-group">
+                                <label for="">Kode Tahun Ajaran</label>
+                                <input type="text" name="kode_tahun_ajaran" id="kode_tahun_ajaran" class="form-control input-sm" required>
+                            </div>                                 
                             <div class="form-group">
                                 <label for="">Tahun Ajaran</label>
                                 <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control input-sm" required>
@@ -86,6 +92,10 @@
                             <h4>Edit Tahun Ajaran</h4>
                         </div>
                         <div class="modal-body">                                         
+                            <div class="form-group">
+                                <label for="">Kode Tahun Ajaran</label>
+                                <input type="text" name="kode_tahun_ajaran" value="{{$val->kode_tahun_ajaran}}" id="kode_tahun_ajaran" class="form-control input-sm" required>
+                            </div>                              
                             <div class="form-group">
                                 <label for="">Tahun Ajaran</label>
                                 <input type="text" name="tahun_ajaran" value="{{$val->tahun_ajaran}}" id="tahun_ajaran" class="form-control input-sm" required>
