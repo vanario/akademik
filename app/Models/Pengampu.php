@@ -12,7 +12,7 @@ class Pengampu extends Model
 
   	public function guru()
   	{
-  		return $this->hasOne(User::class,'id', 'guru_id');
+  		return $this->hasOne(DataGuru::class,'id', 'guru_id');
   	}
 
   	public function mapel()

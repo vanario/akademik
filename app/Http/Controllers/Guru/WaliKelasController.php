@@ -16,10 +16,10 @@ class WaliKelasController extends Controller
 {
     public function index()
     {
-    	$data = WaliKelas::with('user')->orderBy('id','DESC')->paginate(10);
+    	$data = WaliKelas::with('user','guru')->orderBy('id','DESC')->paginate(10);
         $user = User::where('level',3)->get();
         
-        $guru 		= User::where('level',3)->get();
+        $guru 		= DataGuru::all();
     	$kelas 		= Ref_Kelas::pluck('nama','id')->all();
     	$semesters  = Ref_Semester::pluck('semester','id')->all();
     	$tahunajar 	= Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
@@ -44,11 +44,12 @@ class WaliKelasController extends Controller
             return redirect()->route('wali-kelas.index');
         }
 
-        WaliKelas::create($data, $request->all());
+        $createWaliKelas = WaliKelas::create($data, $request->all());
+        $userWali = DataGuru::find($createWaliKelas->guru_id);
 
         //update status waliKelas
         $dataWali = ['wali_kelas' => 'TRUE'];
-        User::find($request->input('guru_id'))->update($dataWali, $request->all());
+        User::find($userWali->user_id)->update($dataWali, $request->all());
         
         alert()->success('');
         Alert::success('Data berhasil ditambah', 'Sukses');
@@ -82,10 +83,11 @@ class WaliKelasController extends Controller
     public function destroy($id)
     {   
         $waliKelas = WaliKelas::find($id);
+        $userWali = DataGuru::find($waliKelas->guru_id);
         
         // update status wali kelas di data user
         $dataWali = ['wali_kelas' => 'FALSE'];
-        User::find($waliKelas->guru_id)->update($dataWali);
+        User::find($userWali->user_id)->update($dataWali);
 
         // proses delete wali kelas
         $waliKelas->delete();

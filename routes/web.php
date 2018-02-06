@@ -93,6 +93,14 @@ Route::group(['prefix' => 'ekstrak', 'middleware' => ['web','level:1']], functio
      Route::get('delete/{id}', 'Siswa\EkstrakurikulerController@destroy')->name('ekstrak.delete');
   });
 
+Route::group(['prefix' => 'ref-ekstrakulikuler', 'middleware' => ['web','level:1']], function() {
+
+     Route::match(['get','post'],'/','Master\RefEkstrakulikulerController@index')->name('refekstrakulikuler.index');
+     Route::post('store','Master\RefEkstrakulikulerController@store')->name('refekstrakulikuler.store');
+     Route::match(['put','patch'],'update/{id}','Master\RefEkstrakulikulerController@update')->name('refekstrakulikuler.update');
+     Route::get('delete/{id}', 'Master\RefEkstrakulikulerController@destroy')->name('refekstrakulikuler.delete');
+});
+
 Route::get('data-master', function () {
     return view('data-master/index');
 });

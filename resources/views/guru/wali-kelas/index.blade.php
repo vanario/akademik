@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>NIP</th>
                                 <th>Guru</th>
                                 <th>Kelas</th>
                                 <th>Semester</th>
@@ -30,7 +31,8 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
-                                <td>{{ $val->guru->name or "-" }}</td>
+                                <td>{{ $val->guru->nip or "-" }}</td>
+                                <td>{{ $val->guru->nama_depan or "-" }} {{ $val->guru->nama_belakang or "-" }}</td>
                                 <td>{{ $val->kelas->nama or "-"}}</td>
                                 <td>{{ $val->semester->semester or "-"}}</td>
                                 <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td>
@@ -185,7 +187,7 @@
         $('#guru_id').typeahead({
             source: [
                 @foreach($guru as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -202,7 +204,7 @@
         $('#guru_id2').typeahead({
             source: [
                 @foreach($guru as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
