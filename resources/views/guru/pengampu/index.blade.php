@@ -203,7 +203,7 @@
         $('#guru_id').typeahead({
             source: [
                 @foreach($guru as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -220,7 +220,7 @@
         $('#guru_id2').typeahead({
             source: [
                 @foreach($guru as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
