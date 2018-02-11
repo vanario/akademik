@@ -108,7 +108,7 @@
                         </div>
                         <div class="modal-body">                                       
                             <div class="form-group">
-                                <label for="">Nama </label>
+                                <label for="">Nama / Nis</label>
                                 <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off" required>
                                 <input type="hidden" name="siswa_id" id="siswaValue" class="form-control">
                             </div>
@@ -119,6 +119,7 @@
                             <div class="form-group">
                                 <label for="">Nis</label>
                                 <input type="text" name="nis" id="nis" class="form-control input-sm" >
+                                <input type="text" name="siswa_id" id="siswaNisValue" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="">Ahlak</label>
@@ -229,11 +230,12 @@
     $(function() {
         function displayResult(item) {            
             $("#siswaValue").val(item.value);
+            $("#siswaNisValue").val(item.value.nis);
         }
         $('#siswa_id').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan']." | ".$value['nis'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -250,7 +252,7 @@
         $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}'},
                 @endforeach
             ],
             onSelect: displayResult
