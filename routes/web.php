@@ -69,6 +69,11 @@ Route::group(['prefix' => 'nilai', 'middleware' => ['web','guru:3']], function()
      Route::get('delete/{id}', 'Siswa\NilaiController@destroy')->name('nilai.delete');
 });
 
+Route::group(['prefix' => 'course', 'middleware' => ['web','level:1']], function() {
+     Route::match(['get','post'],'/','Siswa\CourseController@index')->name('course.index');
+     Route::post('store','Siswa\CourseController@store')->name('course.store');
+});
+
 Route::group(['prefix' => 'presensi', 'middleware' => ['web','level:1']], function() {
 
      Route::match(['get','post'],'/','Siswa\PresensiController@index')->name('presensi.index');
