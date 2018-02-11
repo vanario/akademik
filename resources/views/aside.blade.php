@@ -55,6 +55,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('data-siswa') }}"><i class="fa fa-circle-o"></i>Data siswa</a></li>
+                    <li><a href="{{ url('course') }}"><i class="fa fa-circle-o"></i>Mata Pelajaran</a></li>
                     <li><a href="{{ url('presensi') }}"><i class="fa fa-circle-o"></i>Presensi</a></li>
                     <li><a href="{{ url('ahlak') }}"><i class="fa fa-circle-o"></i>Ahlak Dan Kepribadian</a></li>
                     <li><a href="{{ url('ekstrak') }}"><i class="fa fa-circle-o"></i>Ekstrakurikuler</a></li>
