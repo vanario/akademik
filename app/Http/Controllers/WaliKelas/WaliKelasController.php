@@ -11,6 +11,7 @@ use App\Models\Ref_Kelas;
 use App\Models\Ref_Semester;
 use App\Models\Ref_TahunAjar;
 use App\Models\User;
+use App\Models\DataSiswa;
 use Auth;
 use PDF;
 
@@ -44,7 +45,7 @@ class WaliKelasController extends Controller
             
         $data   = $query->with('siswa','mapel')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
         
-        $siswa  = User::get();
+        $siswa  = DataSiswa::all();
 
         $pelajaran = array();
         foreach ($data as $value) {
@@ -65,7 +66,7 @@ class WaliKelasController extends Controller
 
     public function print()
     {
-        $siswa      = User::where('level', 4)->get();
+        $siswa      = DataSiswa::all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
@@ -99,7 +100,7 @@ class WaliKelasController extends Controller
             
         $data   = $query->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
 
-        $siswa  = User::get();
+        $siswa  = DataSiswa::all();
 
         foreach ($data as $val) {
             $value = $val;     
@@ -115,8 +116,6 @@ class WaliKelasController extends Controller
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
-
-        $siswa = User::get();
         
         $pdf = PDF::loadView('wali-kelas.nilaipdf',compact('value','data','user','mapels','semesters','tahunajar', 'kelas','siswa')); 
             
