@@ -31,6 +31,6 @@ class CreateTableStudentsHasClass extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slider');
+        Schema::dropIfExists('siswa_has_kelas');
     }
 }
