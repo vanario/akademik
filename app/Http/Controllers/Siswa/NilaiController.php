@@ -20,42 +20,40 @@ class NilaiController extends Controller
 {
     public function index(Request $request)
     {
-            $mapel_id = $this->Pengampu();
+        $mapel_id = $this->Pengampu();
 
-            $query = Nilai::query();
+        $query = Nilai::query();
 
-            if($request->input('user_id2')) {
-                $query->where('siswa_id', $request->input('user_id2'));
-            }
-            if($request->input('mata_pelajaran_id')) {
-                $query->where('mata_pelajaran_id', $request->input('mata_pelajaran_id'));
-            }
-            if($request->input('kelas_id')) {
-                $query->where('kelas_id', $request->input('kelas_id'));
-            }
-            if($request->input('tahun_ajaran_id')) {
-                $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
-            }
-            if($request->input('semester_id')) {
-                $query->where('semeseter_id', $request->input('semester_id'));
-            }
-            
-            $data = $query->orderBy('id','DESC')->paginate(10);
+        if($request->input('mata_pelajaran_id')) {
+            $query->where('mata_pelajaran_id', $request->input('mata_pelajaran_id'));
+        }
+        if($request->input('kelas_id')) {
+            $query->where('kelas_id', $request->input('kelas_id'));
+        }
+        if($request->input('tahun_ajaran_id')) {
+            $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
+        }
+        if($request->input('semester_id')) {
+            $query->where('semeseter_id', $request->input('semester_id'));
+        }
+        
+        $data = $query->orderBy('id','DESC')->paginate(10);
 
-        $user       = User::where('level',4)->get();
+        $siswa       = DataSiswa::all();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
+        $mapel2     = Ref_Mapel::pluck('nama','id')->all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-        return view('siswa/nilai.index',compact('data','user','mapel','semesters','tahunajar', 'kelas'));
+        return view('siswa/nilai.index',compact('data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2'));
     }
 
     public function print()
     {
         $mapel_id = $this->Pengampu();
 
-        $siswa      = User::where('level', 4)->get();
+        $siswa      = DataSiswa::all();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
@@ -109,7 +107,6 @@ class NilaiController extends Controller
     public function store(Request $request)
     {   
         $this->validate($request, [
-
             'ulangan_harian1' => 'required|numeric',
             'ulangan_harian2' => 'required|numeric',
             'ulangan_harian3' => 'required|numeric',
@@ -120,41 +117,39 @@ class NilaiController extends Controller
             'uts'             => 'required|numeric',
             'nilai'           => 'required|numeric',
 
-            ]);
+        ]);
         
-        if ($request->input('siswa_id') != null) {            
+        if ($request->input('siswa_id') != null) {          
                      
-         $data = [
-                    'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
-                    'siswa_id'          => $request->input('siswa_id'),
-                    'ulangan_harian1'   => $request->input('ulangan_harian1'),
-                    'ulangan_harian2'   => $request->input('ulangan_harian2'),
-                    'ulangan_harian3'   => $request->input('ulangan_harian3'),
-                    'nilai_tugas1'      => $request->input('nilai_tugas1'),
-                    'nilai_tugas2'      => $request->input('nilai_tugas2'),
-                    'nilai_tugas3'      => $request->input('nilai_tugas3'),
-                    'ujian_praktik'     => $request->input('ujian_praktik'),
-                    'uts'               => $request->input('uts'),
-                    'nilai'             => $request->input('nilai'),
-                    'ketarangan'	    => $request->input('keterangan'),
-                    'kelas_id'          => $request->input('kelas_id'),
-                    'semeseter_id'      => $request->input('semester_id'),                    
-                    'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),                    
-                 ];
-
+            $data = [
+                'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
+                'siswa_id'          => $request->input('siswa_id'),
+                'ulangan_harian1'   => $request->input('ulangan_harian1'),
+                'ulangan_harian2'   => $request->input('ulangan_harian2'),
+                'ulangan_harian3'   => $request->input('ulangan_harian3'),
+                'nilai_tugas1'      => $request->input('nilai_tugas1'),
+                'nilai_tugas2'      => $request->input('nilai_tugas2'),
+                'nilai_tugas3'      => $request->input('nilai_tugas3'),
+                'ujian_praktik'     => $request->input('ujian_praktik'),
+                'uts'               => $request->input('uts'),
+                'nilai'             => $request->input('nilai'),
+                'ketarangan'	    => $request->input('keterangan'),
+                'kelas_id'          => $request->input('kelas_id'),
+                'semeseter_id'      => $request->input('semester_id'),                    
+                'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),                    
+            ];
         }
         else {
-
             alert()->error('');
             Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
             return redirect()->route('nilai.index');
         }
 
-            Nilai::create($data, $request->all());
+        Nilai::create($data, $request->all());
 
-            alert()->success('');
-            Alert::success('Data berhasil ditambah', 'Sukses');
-            return redirect()->route('nilai.index');
+        alert()->success('');
+        Alert::success('Data berhasil ditambah', 'Sukses');
+        return redirect()->route('nilai.index');
     }
 
     public function update(Request $request,$id)
@@ -173,22 +168,22 @@ class NilaiController extends Controller
 
             ]);
         
-         $data = [
-                    'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
-                    'ulangan_harian1'   => $request->input('ulangan_harian1'),
-                    'ulangan_harian2'   => $request->input('ulangan_harian2'),
-                    'ulangan_harian3'   => $request->input('ulangan_harian3'),
-                    'nilai_tugas1'      => $request->input('nilai_tugas1'),
-                    'nilai_tugas2'      => $request->input('nilai_tugas2'),
-                    'nilai_tugas3'      => $request->input('nilai_tugas3'),
-                    'ujian_praktik'     => $request->input('ujian_praktik'),
-                    'uts'               => $request->input('uts'),
-                    'nilai'             => $request->input('nilai'),
-                    'ketarangan'        => $request->input('keterangan'),
-                    'kelas_id'          => $request->input('kelas_id'),
-                    'semeseter_id'      => $request->input('semester_id'),                    
-                    'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),
-                 ];
+        $data = [
+            'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
+            'ulangan_harian1'   => $request->input('ulangan_harian1'),
+            'ulangan_harian2'   => $request->input('ulangan_harian2'),
+            'ulangan_harian3'   => $request->input('ulangan_harian3'),
+            'nilai_tugas1'      => $request->input('nilai_tugas1'),
+            'nilai_tugas2'      => $request->input('nilai_tugas2'),
+            'nilai_tugas3'      => $request->input('nilai_tugas3'),
+            'ujian_praktik'     => $request->input('ujian_praktik'),
+            'uts'               => $request->input('uts'),
+            'nilai'             => $request->input('nilai'),
+            'ketarangan'        => $request->input('keterangan'),
+            'kelas_id'          => $request->input('kelas_id'),
+            'semeseter_id'      => $request->input('semester_id'),                    
+            'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),
+        ];
 
     	Nilai::find($id)->update($data, $request->all());
 
@@ -202,6 +197,41 @@ class NilaiController extends Controller
         Nilai::find($id)->delete();
         alert()->success('');
         Alert::success('Data berhasil dihapus', 'Sukses');
+        return redirect()->route('nilai.index');
+    }
+
+    public function studentWithCourse(Request $request)
+    {
+        if ($request->input('siswa_id') != null) {          
+                     
+            $data = [
+                'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
+                'siswa_id'          => $request->input('siswa_id'),
+                'ulangan_harian1'   => $request->input('ulangan_harian1'),
+                'ulangan_harian2'   => $request->input('ulangan_harian2'),
+                'ulangan_harian3'   => $request->input('ulangan_harian3'),
+                'nilai_tugas1'      => $request->input('nilai_tugas1'),
+                'nilai_tugas2'      => $request->input('nilai_tugas2'),
+                'nilai_tugas3'      => $request->input('nilai_tugas3'),
+                'ujian_praktik'     => $request->input('ujian_praktik'),
+                'uts'               => $request->input('uts'),
+                'nilai'             => $request->input('nilai'),
+                'ketarangan'        => $request->input('keterangan'),
+                'kelas_id'          => $request->input('kelas_id'),
+                'semeseter_id'      => $request->input('semester_id'),                    
+                'tahun_ajaran_id'   => $request->input('tahun_ajaran_id'),                    
+            ];
+        }
+        else {
+            alert()->error('');
+            Alert::error('Nama yang anda masukan salah, Masukan nama sesuai pilihan', 'Gagal');
+            return redirect()->route('nilai.index');
+        }
+
+        Nilai::create($data, $request->all());
+
+        alert()->success('');
+        Alert::success('Data berhasil ditambah', 'Sukses');
         return redirect()->route('nilai.index');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableStudentsHasClass extends Migration
+class CreateTableSiswaHasMapel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTableStudentsHasClass extends Migration
      */
     public function up()
     {
-        Schema::create('siswa_has_kelas', function (Blueprint $table) {
+        Schema::create('siswa_has_mapel', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('siswa_id');
+            $table->integer('mapel_id');
             $table->integer('kelas_id');
             $table->integer('tahun_ajaran_id');
             $table->integer('semester_id');
@@ -31,6 +32,6 @@ class CreateTableStudentsHasClass extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('siswa_has_kelas');
+        Schema::dropIfExists('siswa_has_mapel');
     }
 }
