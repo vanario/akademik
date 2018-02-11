@@ -7,25 +7,18 @@
 <div class="row">
     <section class="content">
         <div class="content-list">
-            <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a>
+            {{-- <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a> --}}
 
                  <form method="POST" action="{{ url('nilai') }}">
                     {{ csrf_field() }}
                     <div class="report-list">
                         <div class="row">
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="">Nama</label>
-                                    <input type="text" name="user_id" id="user_id2" class="form-control" placeholder="Nama" autocomplete="off">
-                                    <input type="hidden" name="user_id2" id="userValue2" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="">Mata Pelajaran</label>
                                     <select  name="mata_pelajaran_id" class="form-control">
                                         <option value="">Pilih Mata Pelajaran</option>
-                                        @foreach($mapel as $id => $nama)
+                                        @foreach($mapel2 as $id => $nama)
                                             <option value="{{$id}}">{{$nama}}</option>
                                         @endforeach
                                     </select>
@@ -53,7 +46,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="">Tahun Ajar</label>
                                     <select  name="tahun_ajaran_id" class="form-control">
@@ -112,7 +105,7 @@
                             <tr>
                                 <td>{{ $no++}}</td>
                                 <td>{{ $val->mapel->nama or "-" }}</td>
-                                <td>{{ $val->siswa->name or "-"}}</td>
+                                <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
                                 <td>{{ $val->kelas->nama or "-"}}</td>
                                 <td style="text-align:center">{{ $val->semester->semester or "-"}}</td>
                                 {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
@@ -131,7 +124,7 @@
                                 <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
                                 {{-- <td>{{ $val->ketarangan or "-"}}</td> --}}
                                 <td>
-                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>      
+                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a> 
                                     <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -169,7 +162,7 @@
                                     <label for="">Mata Pelajaran</label>
                                     <select  name="mata_pelajaran_id" class="form-control" required>
                                         <option value="">Pilih Mata Pelajaran</option>
-                                        @foreach($mapel as $id => $nama)
+                                        @foreach($mapel2 as $id => $nama)
                                             <option value="{{$id}}">{{$nama}}</option>
                                         @endforeach
                                     </select>
@@ -296,7 +289,7 @@
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PATCH">
                         <div class="modal-header">
-                            <h4>Edit Nilai Siswa</h4>
+                            <h4>Edit Nilai Siswa : {{ $val->siswa->nama_depan }}</h4>
                         </div>
                         <div class="modal-body">
                             <div class="col-sm-6">
@@ -304,7 +297,7 @@
                                     <label for="">Mata Pelajaran</label>
                                     <select  name="mata_pelajaran_id" class="form-control" required>
                                         <option value="">Pilih Mata Pelajaran</option>
-                                        @foreach($mapel as $id => $nama)
+                                        @foreach($mapel2 as $id => $nama)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
                                         @endforeach
                                     </select>
@@ -442,7 +435,7 @@
         }
         $('#siswa_id').typeahead({
             source: [
-                @foreach($user as $value)
+                @foreach($siswa as $value)
                     { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
                 @endforeach
             ],
@@ -459,7 +452,7 @@
         }
         $('#user_id2').typeahead({
             source: [
-                @foreach($user as $value)
+                @foreach($siswa as $value)
                     { id: {{ $value['id'] }}, name: '{{ $value['name'] }}' },
                 @endforeach
             ],
