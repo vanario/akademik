@@ -42,10 +42,7 @@ class WaliKelasController extends Controller
             $query->where('semeseter_id', $request->input('semester_id'));
         }
             
-        $data   = $query->with('siswa','mapel')->whereIn('kelas_id',$kelas_id)
-                        ->whereIn('tahun_ajaran_id',$tahun_id) 
-                        ->whereIn('semeseter_id',$semester_id) 
-                        ->orderBy('mata_pelajaran_id','DESC')->paginate(10);
+        $data   = $query->with('siswa','mapel')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
         
         $siswa  = User::get();
 
@@ -100,10 +97,7 @@ class WaliKelasController extends Controller
             $query->where('semeseter_id', $request->input('semester_id'));
         }
             
-        $data   = $query->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->whereIn('kelas_id',$kelas_id)
-                        ->whereIn('tahun_ajaran_id',$tahun_id) 
-                        ->whereIn('semeseter_id',$semester_id) 
-                        ->orderBy('mata_pelajaran_id','DESC')->paginate(10);
+        $data   = $query->with('siswa','mapel','data_siswa','kelas','semester','tahun_ajaran')->orderBy('mata_pelajaran_id','DESC')->paginate(10);
 
         $siswa  = User::get();
 
