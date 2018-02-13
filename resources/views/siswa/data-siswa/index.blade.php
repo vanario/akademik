@@ -145,19 +145,35 @@
                             <div class="form-group">
                                 <div class="col-sm-4"> 
                                     <label for="">Agama</label>
-                                    <input type="text" name="agama" id="agama" class="form-control input-sm" required>
+                                    <select  name="agama" class="form-control">
+                                        <option value="">Pilih Agama</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                    </select>
                                 </div> 
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4">     
                                     <label for="">Jenis Kelamin</label>
-                                    <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control input-sm" required>
+                                    <select  name="jenis_kelamin" class="form-control">
+                                        <option value="">Pilih Jenis Kelain</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4"> 
                                     <label for="">kelas</label>
-                                    <input type="text" name="kelas" id="kelas" class="form-control input-sm" required>
+                                    <select  name="kelas" class="form-control">
+                                        <option>Pilih Kelas</option>
+                                        @foreach($class as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>                                    
                                 </div>
                             </div>
                             <div class="form-group">
@@ -276,7 +292,14 @@
                             <div class="form-group">
                                 <div class="col-sm-4"> 
                                     <label for="">Agama</label>
-                                    <input type="text" name="agama" id="agama" value="{{ $val->agama }}" class="form-control input-sm" required>
+                                    <select  name="agama" class="form-control">
+                                        <option value="">Pilih Agama</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                    </select>
                                 </div> 
                             </div>
                             <div class="form-group">
