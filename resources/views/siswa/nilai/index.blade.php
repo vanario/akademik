@@ -128,14 +128,16 @@
                                 <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
                                 <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
                                 <td>
-                                    @if($val->mapel->kkm >= $nilai_akhir)
+                                    @if($val->mapel->kkm < $nilai_akhir)
                                         Lulus
                                     @else
                                         Belum Tercapai
                                     @endif
                                 </td>
                                 <td>
+                                    @if(!empty($resultMapel))
                                     <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a> 
+                                    @endif
                                     <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -306,7 +308,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Mata Pelajaran</label>
-                                    <select  name="mata_pelajaran_id" class="form-control" disabled>
+                                    <input type="hidden" name="mata_pelajaran_id" value="{{ $resultMapel->id or "-" }}">
+                                    <select  class="form-control" disabled>
                                         <option value="">Pilih Mata Pelajaran</option>
                                         @foreach($mapel2 as $id => $nama)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
@@ -317,7 +320,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Kelas</label>
-                                    <select  name="kelas_id" class="form-control" disabled>
+                                    <input type="hidden" name="kelas_id" value="{{ $resultClass->id or "-"  }}">
+                                    <select name="" class="form-control" disabled>
                                         <option value="">Pilih Kelas</option>
                                         @foreach($kelas as $id => $nama)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->kelas_id? 'selected':''}}>{{ $nama }}</option>
@@ -328,7 +332,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Semester</label>
-                                    <select  name="semester_id" class="form-control" disabled>
+                                    <input type="hidden" name="semester_id" value="{{ $resultSemesteran->id or "-"  }}">
+                                    <select  name="" class="form-control" disabled>
                                         <option value="">Pilih Semester</option>
                                         @foreach($semesters as $id => $semester)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->semeseter_id? 'selected':''}}>{{ $semester }}</option>
@@ -339,7 +344,8 @@
                             <div class="col-sm-6"> 
                                 <div class="form-group">
                                     <label for="">Tahun Ajar</label>
-                                    <select  name="tahun_ajaran_id" class="form-control" disabled>
+                                    <input type="hidden" name="tahun_ajaran_id" value="{{ $resultAjaran->id or "-"  }}">
+                                    <select  name="" class="form-control" disabled>
                                         <option value="">Pilih Tahun Ajar</option>
                                         @foreach($tahunajar as $id => $tahun_ajaran)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->tahun_ajaran_id? 'selected':''}}>{{ $tahun_ajaran }}</option>
