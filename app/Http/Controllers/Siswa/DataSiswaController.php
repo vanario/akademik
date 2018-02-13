@@ -6,14 +6,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DataSiswa;
 use App\Models\User;
+use App\Models\Ref_Mapel;
+use App\Models\Ref_Kelas;
+use App\Models\Ref_TahunAjar;
+use App\Models\Ref_Semester;
 use Alert;
 
 class DataSiswaController extends Controller
 {
     public function index(Request $request)
     {
+        $mapel2     = Ref_Mapel::pluck('nama','id')->all();
+        $class      = Ref_Kelas::pluck('nama','id')->all();
+        $semesters  = Ref_Semester::pluck('semester','id')->all();
+        $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-         $query = DataSiswa::query();
+        $query = DataSiswa::query();
 
             if($request->input('user_id')) {
                 $query->where('nama_depan', $request->input('user_id'));
@@ -22,7 +30,7 @@ class DataSiswaController extends Controller
         
         $user   = User::where('level',4)->get();
 
-    	return view('siswa/data-siswa.index',compact('data','user','siswa'));
+    	return view('siswa/data-siswa.index',compact('data','user','siswa', 'mapel2', 'class', 'semesters', 'tahunajar'));
     }
 
     public function store(Request $request)
