@@ -128,7 +128,7 @@
                                 <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
                                 <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
                                 <td>
-                                    @if($val->mapel->kkm >= $nilai_akhir)
+                                    @if($val->mapel->kkm < $nilai_akhir)
                                         Lulus
                                     @else
                                         Belum Tercapai
