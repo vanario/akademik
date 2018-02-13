@@ -48,7 +48,7 @@ class NilaiController extends Controller
             $query->where('semeseter_id', $semesteran);
         }
         
-        $data = $query->orderBy('id','DESC')->paginate(10);
+        $data = $query->with('mapel', 'kelas', 'semester', 'tahun_ajaran')->orderBy('id','DESC')->paginate(10);
 
         $siswa      = DataSiswa::all();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
