@@ -39,7 +39,7 @@ class NilaiController extends Controller
         
         $data = $query->orderBy('id','DESC')->paginate(10);
 
-        $siswa       = DataSiswa::all();
+        $siswa      = DataSiswa::all();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
         $mapel2     = Ref_Mapel::pluck('nama','id')->all();
         $kelas      = Ref_Kelas::pluck('nama','id')->all();

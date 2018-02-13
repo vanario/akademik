@@ -289,7 +289,7 @@
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PATCH">
                         <div class="modal-header">
-                            <h4>Edit Nilai Siswa : {{ $val->siswa->nama_depan }}</h4>
+                            <h4>Edit Nilai Siswa : {{ $val->siswa->nama_depan or "-"}}</h4>
                         </div>
                         <div class="modal-body">
                             <div class="col-sm-6">
