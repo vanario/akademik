@@ -15,7 +15,7 @@ class DataGuruController extends Controller
     public function index()
     {
     	$data = DataGuru::with('user')->orderBy('id','DESC')->paginate(10);
-
+        // return response()->json($data);
         $user = User::where('level',3)->get();
 
     	return view('guru/data-guru.index',compact('data','user'));
@@ -39,14 +39,21 @@ class DataGuruController extends Controller
 
         if ($request->input('user_id') != null) {            
                      
-         $data = [
-                    'nip'               => $request->input('nip'),
-                    'user_id'           => $request->input('user_id'),
-                    'nama_depan'        => $request->input('nama_depan'),
-                    'nama_belakang'     => $request->input('nama_belakang'),
-                    'alamat'            => $request->input('alamat'),
-                    'no_telp'           => $request->input('no_telp'),                    
-                 ];
+            $data = [
+                'nik'               => $request->input('nik'),
+                'nip'               => $request->input('nip'),
+                'user_id'           => $request->input('user_id'),
+                'nama_depan'        => $request->input('nama_depan'),
+                'nama_belakang'     => $request->input('nama_belakang'),
+                'alamat'            => $request->input('alamat'),
+                'no_telp'           => $request->input('no_telp'),                    
+                'tempat_lahir'      => $request->input('tempat_lahir'),                    
+                'tanggal_lahir'     => $request->input('tanggal_lahir'),                    
+                'jenis_kelamin'     => $request->input('jenis_kelamin'),                    
+                'nama_ibu_kandung'  => $request->input('nama_ibu_kandung'),                    
+                'pendidikan_terakhir'  => $request->input('pendidikan_terakhir'),                    
+                'status_kepegawaian'  => $request->input('status_kepegawaian'),                    
+            ];
 
         }
         else {
@@ -74,11 +81,19 @@ class DataGuruController extends Controller
         if ($request->input('user_id') != null) {            
                      
             $data = [
+                'nik'               => $request->input('nik'),
                 'nip'               => $request->input('nip'),
+                'user_id'           => $request->input('user_id2'),
                 'nama_depan'        => $request->input('nama_depan'),
                 'nama_belakang'     => $request->input('nama_belakang'),
                 'alamat'            => $request->input('alamat'),
-                'no_telp'           => $request->input('no_telp'),
+                'no_telp'           => $request->input('no_telp'),                    
+                'tempat_lahir'      => $request->input('tempat_lahir'),                    
+                'tanggal_lahir'     => $request->input('tanggal_lahir'),                    
+                'jenis_kelamin'     => $request->input('jenis_kelamin'),                    
+                'nama_ibu_kandung'  => $request->input('nama_ibu_kandung'),                    
+                'pendidikan_terakhir'  => $request->input('pendidikan_terakhir'),                    
+                'status_kepegawaian'  => $request->input('status_kepegawaian'),                    
             ];
         }
 

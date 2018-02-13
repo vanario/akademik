@@ -128,7 +128,12 @@
                             <div class="form-group">
                                 <div class="col-sm-4">     
                                     <label for="">Tanggal lahir</label>
-                                    <input type="text" name="tanggal_lahir" id="tanggal_lahir" class="form-control input-sm" required>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" name="tanggal_lahir" id="datepicker">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -254,7 +259,12 @@
                             <div class="form-group">
                                 <div class="col-sm-4">     
                                     <label for="">Tanggal lahir</label>
-                                    <input type="text" name="tanggal_lahir" value="{{ $val->tanggal_lahir }}" id="tanggal_lahir" class="form-control input-sm" required>
+                                     <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" value="{{ $val->tanggal_lahir }}" name="tanggal_lahir" id="datepicker{{$val->id}}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -364,6 +374,15 @@
 <script src="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 
 <script type="text/javascript">
+    $('#datepicker').datepicker({
+          autoclose: true
+    })
+    @foreach($data as $guru)
+        $('#datepicker{{$guru->id}}').datepicker({
+              autoclose: true
+        })
+    @endforeach
+    
     $(function() {
         function displayResult(item) {            
             $("#userValue").val(item.value);
