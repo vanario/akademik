@@ -37,13 +37,22 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>NIS</th>
+                                <th>NISN</th>
+                                <th>Username</th>
                                 <th>Nama Depan</th>
                                 <th>Nama Belakang</th>
                                 <th>Alamat</th>
                                 <th>Nama Wali Murid</th>
                                 <th>Alamat Wali Murid</th>
                                 <th>No Telepon Wali Murid</th>
+                                <th>Tempat, Tanggal Lahir</th>
+                                <th>Agama</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Nama Ayah</th>
+                                <th>Pekerjaan Ayah</th>
+                                <th>Nama Ibu</th>
+                                <th>Pekerjaan Ibu</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -54,6 +63,8 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
+                                <td>{{ $val->nis or "-"}}</td>
+                                <td>{{ $val->nisn or "-"}}</td>
                                 <td>{{ $val->user->name or "-"}}</td>
                                 <td>{{ $val->nama_depan or "-"}}</td>
                                 <td>{{ $val->nama_belakang or "-"}}</td>
@@ -61,6 +72,13 @@
                                 <td>{{ $val->nama_wali_murid or "-"}}</td>
                                 <td>{{ $val->alamat_wali_mulid or "-"}}</td>
                                 <td>{{ $val->no_telp_wali_murid or "-"}}</td>
+                                <td>{{ $val->tempat_lahir or "-"}},{{ $val->tanggal_lahir or "-"}}</td>
+                                <td>{{ $val->agama or "-"}}</td>
+                                <td>{{ $val->jenis_kelamin or "-"}}</td>
+                                <td>{{ $val->nama_ayah or "-"}}</td>
+                                <td>{{ $val->pekerjaan_ayah or "-"}}</td>
+                                <td>{{ $val->nama_ibu or "-"}}</td>
+                                <td>{{ $val->pekerjaan_ibu or "-"}}</td>
                                 <td>
                                     <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>      
                                     <a href="{{action('Siswa\DataSiswaController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>

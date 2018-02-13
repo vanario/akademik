@@ -68,23 +68,28 @@
                 </form>
 
                 <div class="box-list" style="margin-top: 20px;">
+                    <div>
+                        <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
+                        <b>semester : {{ $resultSemesteran->semester or '-' }} </b><br>
+                        <b>Mata Pelajaran :  {{ $resultMapel->nama or '-' }} </b>
+                    </div>
                     <table class="table table-striped" style="width: 100%;">
 
                         <thead>
                             <tr>
                                 <th style="vertical-align:top" rowspan="2">No</th>
-                                <th style="vertical-align:top" rowspan="2">Mata Pelajaran</th>
+                                <th style="vertical-align:top" rowspan="2">NISN</th>
+                                <th style="vertical-align:top" rowspan="2">NIS</th>
                                 <th style="vertical-align:top" rowspan="2">Siswa</th>
-                                <th style="vertical-align:top" rowspan="2">Kelas</th>
-                                <th style="vertical-align:top" rowspan="2">Semester</th>
                                 {{-- <th style="vertical-align:top" rowspan="2">Tahun Ajaran</th> --}}
                                 <th style="text-align:center" colspan="3">Ulangan Harian</th>
                                 <th style="text-align:center" colspan="3">Nilai Tugas</th>                                
                                 <th style="vertical-align:top" rowspan="2">Praktik</th>
                                 <th style="vertical-align:top" rowspan="2">UTS</th>
                                 <th style="vertical-align:top" rowspan="2">UAS</th>
+                                <th style="vertical-align:top" rowspan="2">KKM</th>
                                 <th style="vertical-align:top" rowspan="2">Nilai Akhir</th>
-                                {{-- <th style="vertical-align:top" rowspan="2">Keterangan</th> --}}
+                                <th style="vertical-align:top" rowspan="2">Keterangan</th>
                                 <th style="vertical-align:top" rowspan="2">Action</th>
                             </tr>
                             <tr>
@@ -104,10 +109,9 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
-                                <td>{{ $val->mapel->nama or "-" }}</td>
+                                <td>{{ $val->siswa->nis or "-" }}</td>
+                                <td>{{ $val->siswa->nisn or "-"}}</td>
                                 <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
-                                <td>{{ $val->kelas->nama or "-"}}</td>
-                                <td style="text-align:center">{{ $val->semester->semester or "-"}}</td>
                                 {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
                                 <td>{{ $val->ulangan_harian1 or "-"}}</td>
                                 <td>{{ $val->ulangan_harian2 or "-"}}</td>
@@ -121,8 +125,15 @@
                                 @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
                                 @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
                                 @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
+                                <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
                                 <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
-                                {{-- <td>{{ $val->ketarangan or "-"}}</td> --}}
+                                <td>
+                                    @if($val->mapel->kkm >= $nilai_akhir)
+                                        Lulus
+                                    @else
+                                        Belum Tercapai
+                                    @endif
+                                </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a> 
                                     <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
@@ -160,7 +171,7 @@
                             <div class="col-sm-6">                                       
                                 <div class="form-group">
                                     <label for="">Mata Pelajaran</label>
-                                    <select  name="mata_pelajaran_id" class="form-control" required>
+                                    <select  name="mata_pelajaran_id" class="form-control">
                                         <option value="">Pilih Mata Pelajaran</option>
                                         @foreach($mapel2 as $id => $nama)
                                             <option value="{{$id}}">{{$nama}}</option>
@@ -295,7 +306,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Mata Pelajaran</label>
-                                    <select  name="mata_pelajaran_id" class="form-control" required>
+                                    <select  name="mata_pelajaran_id" class="form-control" disabled>
                                         <option value="">Pilih Mata Pelajaran</option>
                                         @foreach($mapel2 as $id => $nama)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
@@ -306,7 +317,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Kelas</label>
-                                    <select  name="kelas_id" class="form-control" required>
+                                    <select  name="kelas_id" class="form-control" disabled>
                                         <option value="">Pilih Kelas</option>
                                         @foreach($kelas as $id => $nama)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->kelas_id? 'selected':''}}>{{ $nama }}</option>
@@ -317,7 +328,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Semester</label>
-                                    <select  name="semester_id" class="form-control" required>
+                                    <select  name="semester_id" class="form-control" disabled>
                                         <option value="">Pilih Semester</option>
                                         @foreach($semesters as $id => $semester)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->semeseter_id? 'selected':''}}>{{ $semester }}</option>
@@ -328,7 +339,7 @@
                             <div class="col-sm-6"> 
                                 <div class="form-group">
                                     <label for="">Tahun Ajar</label>
-                                    <select  name="tahun_ajaran_id" class="form-control" required>
+                                    <select  name="tahun_ajaran_id" class="form-control" disabled>
                                         <option value="">Pilih Tahun Ajar</option>
                                         @foreach($tahunajar as $id => $tahun_ajaran)
                                             <option value="{{ $id }}" {{old('id',$id)==$val->tahun_ajaran_id? 'selected':''}}>{{ $tahun_ajaran }}</option>
