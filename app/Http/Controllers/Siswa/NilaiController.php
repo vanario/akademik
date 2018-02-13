@@ -20,21 +20,32 @@ class NilaiController extends Controller
 {
     public function index(Request $request)
     {
-        $mapel_id = $this->Pengampu();
+        $mapel_id       = $this->Pengampu();
+        $mata_pelajaran = $request->input('mata_pelajaran_id');
+        $resultMapel    = Ref_Mapel::find($mata_pelajaran);
+
+        $class          = $request->input('kelas_id');
+        $resultClass    = Ref_Kelas::find($class);
+
+        $tahunAjaran    = $request->input('tahun_ajaran_id');
+        $resultAjaran   = Ref_TahunAjar::find($tahunAjaran);
+
+        $semesteran       = $request->input('semester_id');
+        $resultSemesteran = Ref_Semester::find($semesteran);
 
         $query = Nilai::query();
 
-        if($request->input('mata_pelajaran_id')) {
-            $query->where('mata_pelajaran_id', $request->input('mata_pelajaran_id'));
+        if($mata_pelajaran) {
+            $query->where('mata_pelajaran_id', $mata_pelajaran);
         }
-        if($request->input('kelas_id')) {
-            $query->where('kelas_id', $request->input('kelas_id'));
+        if($class) {
+            $query->where('kelas_id', $class);
         }
-        if($request->input('tahun_ajaran_id')) {
-            $query->where('tahun_ajaran_id', $request->input('tahun_ajaran_id'));
+        if($tahunAjaran) {
+            $query->where('tahun_ajaran_id', $tahunAjaran);
         }
-        if($request->input('semester_id')) {
-            $query->where('semeseter_id', $request->input('semester_id'));
+        if($semesteran) {
+            $query->where('semeseter_id', $semesteran);
         }
         
         $data = $query->orderBy('id','DESC')->paginate(10);
@@ -46,7 +57,10 @@ class NilaiController extends Controller
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-        return view('siswa/nilai.index',compact('data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2'));
+        return view('siswa/nilai.index',compact(
+                'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel'
+        ));
     }
 
     public function print()
