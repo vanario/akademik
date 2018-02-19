@@ -16,7 +16,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="">Nama </label>
-                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off">
                                     <input type="hidden" name="siswa" id="siswaValue" class="form-control">
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                     </div>
                 </form>
 
-                <div class="box-list" style="margin-top: 20px;">
+                <div id="table" class="box-list" style="margin-top: 20px;">
                     <div>
                         <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} </b><br>
                         <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
@@ -127,47 +127,47 @@
                         <tbody>
                             <?php $no = $data->firstItem();?>
                             @if($data->count())  
-                            @foreach($data as $val)  
-                            <tr>
-                                <td>{{ $no++}}</td>
-                                <td>{{ $val->siswa->nis or "-" }}</td>
-                                <td>{{ $val->siswa->nisn or "-"}}</td>
-                                <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
-                                {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
-                                <td>{{ $val->ulangan_harian1 or "-"}}</td>
-                                <td>{{ $val->ulangan_harian2 or "-"}}</td>
-                                <td>{{ $val->ulangan_harian3 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas1 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas2 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas3 or "-"}}</td>
-                                <td style="text-align:center">{{ $val->ujian_praktik or "-"}}</td>
-                                <td>{{ $val->uts or "-"}}</td>
-                                <td>{{ $val->nilai or "-"}}</td>
-                                @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
-                                @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
-                                @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
-                                <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
-                                <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
-                                <td>
-                                    @if($val->mapel->kkm < $nilai_akhir)
-                                        Lulus
-                                    @else
-                                        Belum Tercapai
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(!empty($resultMapel))
-                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a> 
-                                    @endif
-                                    <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                                @else
-                                    <tr>
-                                        <td class="alert alert-warning" colspan="9">No Records found !!</td>
-                                    </tr>
-                                @endif
+                                @foreach($data as $val)  
+                                    @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
+                                    @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
+                                    @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
+                                    <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
+                                        {{ csrf_field() }}
+                                        <tr>
+                                            <td>{{ $no++}}</td>
+                                            <td>{{ $val->siswa->nis or "-" }}</td>
+                                            <td>{{ $val->siswa->nisn or "-"}}</td>
+                                            <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->ulangan_harian1 or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->ulangan_harian2 or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->ulangan_harian3 or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->nilai_tugas1 or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->nilai_tugas2 or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->nilai_tugas3 or "-"}}</td>
+                                            <td contenteditable="true" style="text-align:center">{{ $val->ujian_praktik or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->uts or "-"}}</td>
+                                            <td contenteditable="true">{{ $val->nilai or "-"}}</td>                                
+                                            <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
+                                            <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
+                                            <td>
+                                                @if($val->mapel->kkm < $nilai_akhir)
+                                                    Lulus
+                                                @else
+                                                    Belum Tercapai
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <input type="submit" value="Simpan" class="btn btn-subscribe">
+                                                
+                                            </td>
+                                        </tr>
+                                    </form>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="alert alert-warning" colspan="9">No Records found !!</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -313,150 +313,55 @@
                     </form> 
                 </div>
             </div>
-        </div>      
-
-        @foreach($data as $val)
-        <div class="modal fade" id="edit{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
-                    {{ csrf_field() }}
-                    <input name="_method" type="hidden" value="PATCH">
-                        <div class="modal-header">
-                            <h4>Edit Nilai Siswa : {{ $val->siswa->nama_depan or "-"}}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Mata Pelajaran</label>
-                                    <input type="hidden" name="mata_pelajaran_id" value="{{ $resultMapel->id or "-" }}">
-                                    <select  class="form-control" disabled>
-                                        <option value="">Pilih Mata Pelajaran</option>
-                                        @foreach($mapel2 as $id => $nama)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>                                                        
-                            </div>    
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Kelas</label>
-                                    <input type="hidden" name="kelas_id" value="{{ $resultClass->id or "-"  }}">
-                                    <select name="" class="form-control" disabled>
-                                        <option value="">Pilih Kelas</option>
-                                        @foreach($kelas as $id => $nama)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->kelas_id? 'selected':''}}>{{ $nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Semester</label>
-                                    <input type="hidden" name="semester_id" value="{{ $resultSemesteran->id or "-"  }}">
-                                    <select  name="" class="form-control" disabled>
-                                        <option value="">Pilih Semester</option>
-                                        @foreach($semesters as $id => $semester)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->semeseter_id? 'selected':''}}>{{ $semester }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6"> 
-                                <div class="form-group">
-                                    <label for="">Tahun Ajar</label>
-                                    <input type="hidden" name="tahun_ajaran_id" value="{{ $resultAjaran->id or "-"  }}">
-                                    <select  name="" class="form-control" disabled>
-                                        <option value="">Pilih Tahun Ajar</option>
-                                        @foreach($tahunajar as $id => $tahun_ajaran)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->tahun_ajaran_id? 'selected':''}}>{{ $tahun_ajaran }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian1') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 1</label>
-                                    <input type="text" name="ulangan_harian1" value="{{ $val->ulangan_harian1 }}" id="ulangan_harian1" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ulangan_harian1') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian2') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 2</label>
-                                    <input type="text" name="ulangan_harian2" id="ulangan_harian2" value="{{ $val->ulangan_harian2 }}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ulangan_harian2') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian3') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 3</label>
-                                    <input type="text" name="ulangan_harian3" id="ulangan_harian3" value="{{ $val->ulangan_harian3 }}"class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('nilai_tugas1') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 1</label>
-                                    <input type="text" name="nilai_tugas1" id="nilai_tugas1" value="{{ $val->nilai_tugas1}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas1') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('nilai_tugas2') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 2</label>
-                                    <input type="text" name="nilai_tugas2" id="nilai_tugas2" value="{{ $val->nilai_tugas2}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas2') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('nilai_tugas3') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 3</label>
-                                    <input type="text" name="nilai_tugas3" id="nilai_tugas3" value="{{ $val->nilai_tugas3}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas3') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('ujian_praktik') ? 'has-error' : ''}}>
-                                    <label for="">Ujian Praktik</label>
-                                    <input type="text" name="ujian_praktik" id="ujian_praktik" value="{{ $val->ujian_praktik}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ujian_praktik') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('uts') ? 'has-error' : ''}}>
-                                    <label for="">Nilai UTS</label>
-                                    <input type="text" name="uts" id="uts" value="{{ $val->uts}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('uts') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">  
-                                <div class="form-group" {{$errors->has('nilai') ? 'has-error' : ''}}>
-                                    <label for="">Nilai UAS</label>
-                                    <input type="text" name="nilai" id="nilai" value="{{ $val->nilai}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="">Keterangan</label>
-                                    <input type="text" name="keterangan" value="{{ $val->ketarangan }}" id="keterangan" class="form-control input-sm" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div>
-                                <input type="submit"  value="Simpan" class="btn btn-subscribe" >
-                            </div>
-                        </div>
-                    </form> 
-                </div>
-            </div>
-        </div>  
-        @endforeach
+        </div>   
     </section>
 </div>
 
+@endsection
+
+@section('css')
+    <style type="text/css">
+      
+      @import "compass/css3";
+
+      .table-editable {
+        position: relative;
+        
+        .glyphicon {
+          font-size: 20px;
+        }
+      }
+
+      .table-remove {
+        color: #700;
+        cursor: pointer;
+        
+        &:hover {
+          color: #f00;
+        }
+      }
+
+      .table-up, .table-down {
+        color: #007;
+        cursor: pointer;
+        
+        &:hover {
+          color: #00f;
+        }
+      }
+
+      .table-add {
+        color: #070;
+        cursor: pointer;
+        position: absolute;
+        top: 8px;
+        right: 0;
+        
+        &:hover {
+          color: #0b0;
+        }
+      }  
+    </style>
 @endsection
 
 @section('script')
@@ -474,7 +379,7 @@
         $('#siswa_id').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -491,13 +396,70 @@
         $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
         });
     });
 
+</script>
+
+<script type="text/javascript">
+  var $TABLE = $('#table');
+  var $BTN = $('#export-btn');
+  var $EXPORT = $('#export');
+
+  $('.table-add').click(function () {
+    var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
+    $TABLE.find('table').append($clone);
+  });
+
+  $('.table-remove').click(function () {
+    $(this).parents('tr').detach();
+  });
+
+  $('.table-up').click(function () {
+    var $row = $(this).parents('tr');
+    if ($row.index() === 1) return; // Don't go above the header
+    $row.prev().before($row.get(0));
+  });
+
+  $('.table-down').click(function () {
+    var $row = $(this).parents('tr');
+    $row.next().after($row.get(0));
+  });
+
+  // A few jQuery helpers for exporting only
+  jQuery.fn.pop = [].pop;
+  jQuery.fn.shift = [].shift;
+
+  $BTN.click(function () {
+    var $rows = $TABLE.find('tr:not(:hidden)');
+    var headers = [];
+    var data = [];
+    
+    // Get the headers (add special header logic here)
+    $($rows.shift()).find('th:not(:empty)').each(function () {
+      headers.push($(this).text().toLowerCase());
+    });
+    
+    // Turn all existing rows into a loopable array
+    $rows.each(function () {
+      var $td = $(this).find('td');
+      var h = {};
+      
+      // Use the headers from earlier to name our hash keys
+      headers.forEach(function (header, i) {
+        h[header] = $td.eq(i).text();   
+      });
+      
+      data.push(h);
+    });
+    
+    // Output the result
+    $EXPORT.text(JSON.stringify(data));
+  });
 </script>
 
 @endsection

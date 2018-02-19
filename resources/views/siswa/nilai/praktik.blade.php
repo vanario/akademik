@@ -16,7 +16,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="">Nama </label>
-                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off">
                                     <input type="hidden" name="siswa" id="siswaValue" class="form-control">
                                 </div>
                             </div>
@@ -89,8 +89,6 @@
 
                 <div class="box-list" style="margin-top: 20px;">
                     <div>
-                        <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} {{ $resultStudent->nama_belakang or "-"}}</b><br>  
-                        <b>NISN / NIS : {{ $resultStudent->nisn or '-' }} / {{ $resultStudent->nis or '-' }} </b><br>
                         <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
                         <b>semester : {{ $resultSemesteran->semester or '-' }} </b><br>
                         <b>Mata Pelajaran :  {{ $resultMapel->nama or '-' }} </b>
@@ -99,7 +97,9 @@
                         <thead>
                             <tr>
                                 <th style="vertical-align:top" rowspan="2">No</th>
-                                {{-- <th style="vertical-align:top" rowspan="2">Tahun Ajaran</th> --}}                             
+                                <th style="vertical-align:top" rowspan="2">NISN</th>
+                                <th style="vertical-align:top" rowspan="2">NIS</th>
+                                <th style="vertical-align:top" rowspan="2">Siswa</th>
                                 <th style="vertical-align:top" rowspan="2">Praktik</th>
                                 <th style="vertical-align:top" rowspan="2">KKM</th>
                                 <th style="vertical-align:top" rowspan="2">Nilai Akhir</th>
@@ -112,18 +112,19 @@
                             <?php $no = $data->firstItem();?>
                             @if($data->count())  
                             @foreach($data as $val)  
+                                @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
+                                @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
+                                @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
                                 <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
-                                    <input name="_method" type="hidden" value="PATCH">
+                                    {{ csrf_field() }}
                                     <tr>
-                                        <td>{{ $no++}}</td>
+                                        <td>{{ $no++}}</td>                                        
+                                        <td>{{ $val->siswa->nis or "-" }}</td>
+                                        <td>{{ $val->siswa->nisn or "-"}}</td>
+                                        <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
                                         <td>
-                                            <input type="text" name="nilai_tugas1" value="{{ $val->ujian_praktik or "-"}}">
+                                            <input type="text" name="ujian_praktik" value="{{ $val->ujian_praktik or "-"}}">
                                         </td>
-
-                                        @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
-                                        @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
-                                        @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
-
                                         <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
                                         <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
                                         <td>
@@ -312,7 +313,7 @@
         $('#siswa_id').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -329,7 +330,7 @@
         $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult

@@ -15,7 +15,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="">Nama </label>
-                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="siswa_id" id="siswa_id" class="form-control" autocomplete="off" >
                                     <input type="hidden" name="siswa" id="siswaValue" class="form-control">
                                 </div>
                             </div>
@@ -88,8 +88,6 @@
 
                 <div class="box-list" style="margin-top: 20px;">
                     <div>
-                        <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} {{ $resultStudent->nama_belakang or "-"}}</b><br>  
-                        <b>NISN / NIS : {{ $resultStudent->nisn or '-' }} / {{ $resultStudent->nis or '-' }} </b><br>
                         <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
                         <b>semester : {{ $resultSemesteran->semester or '-' }} </b><br>
                         <b>Mata Pelajaran :  {{ $resultMapel->nama or '-' }} </b>
@@ -98,7 +96,9 @@
                         <thead>
                             <tr>
                                 <th style="vertical-align:top" rowspan="2">No</th>
-                                {{-- <th style="vertical-align:top" rowspan="2">Tahun Ajaran</th> --}}
+                                <th style="vertical-align:top" rowspan="2">NISN</th>
+                                <th style="vertical-align:top" rowspan="2">NIS</th>
+                                <th style="vertical-align:top" rowspan="2">Siswa</th>
                                 <th style="text-align:center" colspan="3">Nilai Tugas</th>      
                                 <th style="vertical-align:top" rowspan="2">KKM</th>
                                 <th style="vertical-align:top" rowspan="2">Nilai Akhir</th>
@@ -116,48 +116,48 @@
                         <tbody>
                             <?php $no = $data->firstItem();?>
                             @if($data->count())  
-                            @foreach($data as $val)  
-                                <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
-                                    <input name="_method" type="hidden" value="PATCH">
-                                    <tr>
-                                        <td>{{ $no++}}</td>
-                                        {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
-                                        <td>
-                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas1 }}">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas2 }}">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas3 }}">
-                                        </td>
-                                        @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
-                                        @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
-                                        @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
-                                        <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
-                                        <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
-                                        <td>
-                                            @if($val->mapel->kkm < $nilai_akhir)
-                                                Lulus
-                                            @else
-                                                Belum Tercapai
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{-- @if(!empty($resultMapel)) --}}
-                                                {{-- <a type="button"><span class="fa fa-pencil"></span></a>  --}}
-                                            <input type="submit" value="Simpan" class="btn btn-subscribe" >
-                                            {{-- @endif --}}
-                                            <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                </form>
-                            @endforeach
-                                @else
-                                    <tr>
-                                        <td class="alert alert-warning" colspan="9">No Records found !!</td>
-                                    </tr>
-                                @endif
+                                @foreach($data as $val)  
+                                    <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
+                                        {{ csrf_field() }}
+                                        <tr>
+                                            <td>{{ $no++}}</td>                                            
+                                            <td>{{ $val->siswa->nis or "-" }}</td>
+                                            <td>{{ $val->siswa->nisn or "-"}}</td>
+                                            <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
+                                            <td>
+                                                <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas1 }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="nilai_tugas2" value="{{ $val->nilai_tugas2 }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="nilai_tugas3" value="{{ $val->nilai_tugas3 }}">
+                                            </td>
+                                            @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
+                                            @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
+                                            @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
+                                            <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
+                                            <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
+                                            <td>
+                                                @if($val->mapel->kkm < $nilai_akhir)
+                                                    Lulus
+                                                @else
+                                                    Belum Tercapai
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if(!empty($resultMapel))
+                                                    <input type="submit" value="Simpan" class="btn btn-subscribe">
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </form>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="alert alert-warning" colspan="9">No Records found !!</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -324,7 +324,7 @@
         $('#siswa_id').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult
@@ -341,7 +341,7 @@
         $('#user_id2').typeahead({
             source: [
                 @foreach($siswa as $value)
-                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }}' },
+                    { id: {{ $value['id'] }}, name: '{{ $value['nama_depan'] }} {{ $value['nama_belakang'] }}' },
                 @endforeach
             ],
             onSelect: displayResult

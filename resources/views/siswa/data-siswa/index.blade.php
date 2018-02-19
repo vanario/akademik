@@ -159,7 +159,7 @@
                                 <div class="col-sm-4">     
                                     <label for="">Jenis Kelamin</label>
                                     <select  name="jenis_kelamin" class="form-control">
-                                        <option value="">Pilih Jenis Kelain</option>
+                                        <option value="">Pilih Jenis Kelamin</option>
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>

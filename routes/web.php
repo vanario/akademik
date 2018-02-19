@@ -73,7 +73,8 @@ Route::group(['prefix' => 'nilai', 'middleware' => ['web','guru:3']], function()
      Route::match(['get','post'],'pdfprint','Siswa\NilaiController@print')->name('nilai.pdfprint');
      Route::match(['get','post'],'pdf','Siswa\NilaiController@pdf')->name('nilai.pdf');
      Route::post('store','Siswa\NilaiController@store')->name('nilai.store');
-     Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
+     // Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
+     Route::post('update/{id}','Siswa\NilaiController@update')->name('nilai.update');
      Route::get('delete/{id}', 'Siswa\NilaiController@destroy')->name('nilai.delete');
 });
 
