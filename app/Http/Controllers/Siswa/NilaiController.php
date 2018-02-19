@@ -12,6 +12,7 @@ use App\Models\Ref_Mapel;
 use App\Models\Ref_Kelas;
 use App\Models\Ref_TahunAjar;
 use App\Models\Ref_Semester;
+use App\Models\DataGuru;
 use Auth;
 use Alert;
 use PDF;
@@ -19,10 +20,13 @@ use PDF;
 class NilaiController extends Controller
 {
     public function index(Request $request)
-    {
-        $mapel_id       = $this->Pengampu();
+    {         
+        $mapel_id       = $this->Pengampu(); 
         $mata_pelajaran = $request->input('mata_pelajaran_id');
         $resultMapel    = Ref_Mapel::find($mata_pelajaran);
+
+        $student        = $request->input('siswa');
+        $resultStudent  = DataSiswa::find($student);
 
         $class          = $request->input('kelas_id');
         $resultClass    = Ref_Kelas::find($class);
@@ -35,6 +39,9 @@ class NilaiController extends Controller
 
         $query = Nilai::query();
 
+        if($student) {
+            $query->where('siswa_id', $student);
+        }
         if($mata_pelajaran) {
             $query->where('mata_pelajaran_id', $mata_pelajaran);
         }
@@ -52,15 +59,45 @@ class NilaiController extends Controller
 
         $siswa      = DataSiswa::all();
         $mapel      = Ref_Mapel::whereIn('id',$mapel_id)->pluck('nama','id')->all();
-        $mapel2     = Ref_Mapel::pluck('nama','id')->all();
+
+        $teacher    = DataGuru::where('user_id', Auth::user()->id)->first();        
+        $mapel2     = Pengampu::with('mapel')->where('guru_id', $teacher->id)->get();
+
         $kelas      = Ref_Kelas::pluck('nama','id')->all();
         $semesters  = Ref_Semester::pluck('semester','id')->all();
         $tahunajar  = Ref_TahunAjar::pluck('tahun_ajaran','id')->all();
 
-        return view('siswa/nilai.index',compact(
-                'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
-                'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel'
-        ));
+        if ($request->input('type_nilai') == '0' || $request->input('type_nilai') == '') {
+            return view('siswa/nilai.index',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        } elseif ($request->input('type_nilai') == '1') {
+            return view('siswa/nilai.harian',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        } elseif ($request->input('type_nilai') == '2') {
+            return view('siswa/nilai.tugas',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        } elseif ($request->input('type_nilai') == '3') {
+            return view('siswa/nilai.praktik',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        } elseif ($request->input('type_nilai') == '4') {
+            return view('siswa/nilai.uts',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        } elseif ($request->input('type_nilai') == '5') {
+            return view('siswa/nilai.uas',compact(
+                    'data','siswa','mapel','semesters','tahunajar', 'kelas', 'mapel2',
+                    'resultClass', 'resultAjaran', 'resultSemesteran', 'resultMapel', 'resultStudent'
+            ));
+        }
     }
 
     public function print()
@@ -168,19 +205,18 @@ class NilaiController extends Controller
 
     public function update(Request $request,$id)
     {
-        $this->validate($request, [
+        // $this->validate($request, [
+        //     'ulangan_harian1' => 'required|numeric',
+        //     'ulangan_harian2' => 'required|numeric',
+        //     'ulangan_harian3' => 'required|numeric',
+        //     'nilai_tugas1'    => 'required|numeric',
+        //     'nilai_tugas2'    => 'required|numeric',
+        //     'nilai_tugas3'    => 'required|numeric',
+        //     'ujian_praktik'   => 'required|numeric',
+        //     'uts'             => 'required|numeric',
+        //     'nilai'           => 'required|numeric',
 
-            'ulangan_harian1' => 'required|numeric',
-            'ulangan_harian2' => 'required|numeric',
-            'ulangan_harian3' => 'required|numeric',
-            'nilai_tugas1'    => 'required|numeric',
-            'nilai_tugas2'    => 'required|numeric',
-            'nilai_tugas3'    => 'required|numeric',
-            'ujian_praktik'   => 'required|numeric',
-            'uts'             => 'required|numeric',
-            'nilai'           => 'required|numeric',
-
-            ]);
+        // ]);
         
         $data = [
             'mata_pelajaran_id' => $request->input('mata_pelajaran_id'),
