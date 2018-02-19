@@ -68,7 +68,7 @@
                                 <div class="form-group">
                                     <label for="">Nilai</label>
                                     <select  name="type_nilai" class="form-control">
-                                        <option value="0">Pilih Semua</option>
+                                        <option value="">Pilih Semua</option>
                                         <option value="1">Ulangan Harian</option>
                                         <option value="2">Nilai Tugas</option>
                                         <option value="3">Praktik</option>
@@ -89,7 +89,6 @@
 
                 <div class="box-list" style="margin-top: 20px;">
                     <div>
-                        <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} </b><br>
                         <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
                         <b>semester : {{ $resultSemesteran->semester or '-' }} </b><br>
                         <b>Mata Pelajaran :  {{ $resultMapel->nama or '-' }} </b>
@@ -104,19 +103,12 @@
                                 <th style="vertical-align:top" rowspan="2">Siswa</th>
                                 {{-- <th style="vertical-align:top" rowspan="2">Tahun Ajaran</th> --}}
                                 <th style="text-align:center" colspan="3">Ulangan Harian</th>
-                                <th style="text-align:center" colspan="3">Nilai Tugas</th>                                
-                                <th style="vertical-align:top" rowspan="2">Praktik</th>
-                                <th style="vertical-align:top" rowspan="2">UTS</th>
-                                <th style="vertical-align:top" rowspan="2">UAS</th>
                                 <th style="vertical-align:top" rowspan="2">KKM</th>
                                 <th style="vertical-align:top" rowspan="2">Nilai Akhir</th>
                                 <th style="vertical-align:top" rowspan="2">Keterangan</th>
                                 <th style="vertical-align:top" rowspan="2">Action</th>
                             </tr>
                             <tr>
-                                <th style="text-align:center">1</th>
-                                <th style="text-align:center">2</th>
-                                <th style="text-align:center">3</th>
                                 <th style="text-align:center">1</th>
                                 <th style="text-align:center">2</th>
                                 <th style="text-align:center">3</th>
@@ -136,13 +128,7 @@
                                 {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
                                 <td>{{ $val->ulangan_harian1 or "-"}}</td>
                                 <td>{{ $val->ulangan_harian2 or "-"}}</td>
-                                <td>{{ $val->ulangan_harian3 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas1 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas2 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas3 or "-"}}</td>
-                                <td style="text-align:center">{{ $val->ujian_praktik or "-"}}</td>
-                                <td>{{ $val->uts or "-"}}</td>
-                                <td>{{ $val->nilai or "-"}}</td>
+                                <td>{{ $val->ulangan_harian3 or "-"}}</td>                               
                                 @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
                                 @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
                                 @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))

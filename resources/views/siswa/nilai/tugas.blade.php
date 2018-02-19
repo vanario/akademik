@@ -8,7 +8,6 @@
     <section class="content">
         <div class="content-list">
             {{-- <a data-toggle="modal" data-target="#add" class="btn bg-purple " font-16" style="margin-bottom:30px;">Tambah</a> --}}
-
                  <form method="POST" action="{{ url('nilai') }}">
                     {{ csrf_field() }}
                     <div class="report-list">
@@ -65,17 +64,17 @@
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="">Nilai</label>
-                                    <select  name="type_nilai" class="form-control">
-                                        <option value="0">Pilih Semua</option>
-                                        <option value="1">Ulangan Harian</option>
-                                        <option value="2">Nilai Tugas</option>
-                                        <option value="3">Praktik</option>
-                                        <option value="4">UTS</option>
-                                        <option value="5">UAS</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label for="">Nilai</label>
+                                <select  name="type_nilai" class="form-control">
+                                    <option value="">Pilih Semua</option>
+                                    <option value="1">Ulangan Harian</option>
+                                    <option value="2">Nilai Tugas</option>
+                                    <option value="3">Praktik</option>
+                                    <option value="4">UTS</option>
+                                    <option value="5">UAS</option>
+                                </select>
+                            </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group">
@@ -89,34 +88,24 @@
 
                 <div class="box-list" style="margin-top: 20px;">
                     <div>
-                        <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} </b><br>
+                        <b>Nama Siswa : {{ $resultStudent->nama_depan or '-' }} {{ $resultStudent->nama_belakang or "-"}}</b><br>  
+                        <b>NISN / NIS : {{ $resultStudent->nisn or '-' }} / {{ $resultStudent->nis or '-' }} </b><br>
                         <b>kelas : {{ $resultClass->nama or '-' }} </b><br>
                         <b>semester : {{ $resultSemesteran->semester or '-' }} </b><br>
                         <b>Mata Pelajaran :  {{ $resultMapel->nama or '-' }} </b>
                     </div>
                     <table class="table table-striped" style="width: 100%;">
-
                         <thead>
                             <tr>
                                 <th style="vertical-align:top" rowspan="2">No</th>
-                                <th style="vertical-align:top" rowspan="2">NISN</th>
-                                <th style="vertical-align:top" rowspan="2">NIS</th>
-                                <th style="vertical-align:top" rowspan="2">Siswa</th>
                                 {{-- <th style="vertical-align:top" rowspan="2">Tahun Ajaran</th> --}}
-                                <th style="text-align:center" colspan="3">Ulangan Harian</th>
-                                <th style="text-align:center" colspan="3">Nilai Tugas</th>                                
-                                <th style="vertical-align:top" rowspan="2">Praktik</th>
-                                <th style="vertical-align:top" rowspan="2">UTS</th>
-                                <th style="vertical-align:top" rowspan="2">UAS</th>
+                                <th style="text-align:center" colspan="3">Nilai Tugas</th>      
                                 <th style="vertical-align:top" rowspan="2">KKM</th>
                                 <th style="vertical-align:top" rowspan="2">Nilai Akhir</th>
                                 <th style="vertical-align:top" rowspan="2">Keterangan</th>
                                 <th style="vertical-align:top" rowspan="2">Action</th>
                             </tr>
                             <tr>
-                                <th style="text-align:center">1</th>
-                                <th style="text-align:center">2</th>
-                                <th style="text-align:center">3</th>
                                 <th style="text-align:center">1</th>
                                 <th style="text-align:center">2</th>
                                 <th style="text-align:center">3</th>
@@ -128,40 +117,41 @@
                             <?php $no = $data->firstItem();?>
                             @if($data->count())  
                             @foreach($data as $val)  
-                            <tr>
-                                <td>{{ $no++}}</td>
-                                <td>{{ $val->siswa->nis or "-" }}</td>
-                                <td>{{ $val->siswa->nisn or "-"}}</td>
-                                <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
-                                {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
-                                <td>{{ $val->ulangan_harian1 or "-"}}</td>
-                                <td>{{ $val->ulangan_harian2 or "-"}}</td>
-                                <td>{{ $val->ulangan_harian3 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas1 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas2 or "-"}}</td>
-                                <td>{{ $val->nilai_tugas3 or "-"}}</td>
-                                <td style="text-align:center">{{ $val->ujian_praktik or "-"}}</td>
-                                <td>{{ $val->uts or "-"}}</td>
-                                <td>{{ $val->nilai or "-"}}</td>
-                                @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
-                                @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
-                                @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
-                                <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
-                                <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
-                                <td>
-                                    @if($val->mapel->kkm < $nilai_akhir)
-                                        Lulus
-                                    @else
-                                        Belum Tercapai
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(!empty($resultMapel))
-                                    <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a> 
-                                    @endif
-                                    <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                                <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
+                                    <input name="_method" type="hidden" value="PATCH">
+                                    <tr>
+                                        <td>{{ $no++}}</td>
+                                        {{-- <td>{{ $val->tahun_ajaran->tahun_ajaran or "-"}}</td> --}}
+                                        <td>
+                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas1 }}">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas2 }}">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="nilai_tugas1" value="{{ $val->nilai_tugas3 }}">
+                                        </td>
+                                        @php($ulangan_harian = ($val->ulangan_harian1+$val->ulangan_harian2+$val->ulangan_harian3)/3)
+                                        @php($nilai_tugas = ($val->nilai_tugas1+$val->nilai_tugas2+$val->nilai_tugas3)/3)
+                                        @php($nilai_akhir = round(($ulangan_harian+$nilai_tugas+$val->ujian_praktik+$val->uts+$val->nilai)/5))
+                                        <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
+                                        <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
+                                        <td>
+                                            @if($val->mapel->kkm < $nilai_akhir)
+                                                Lulus
+                                            @else
+                                                Belum Tercapai
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{-- @if(!empty($resultMapel)) --}}
+                                                {{-- <a type="button"><span class="fa fa-pencil"></span></a>  --}}
+                                            <input type="submit" value="Simpan" class="btn btn-subscribe" >
+                                            {{-- @endif --}}
+                                            <a href="{{action('Siswa\NilaiController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </form>
                             @endforeach
                                 @else
                                     <tr>
@@ -313,147 +303,7 @@
                     </form> 
                 </div>
             </div>
-        </div>      
-
-        @foreach($data as $val)
-        <div class="modal fade" id="edit{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('nilai.update',$val->id) }}" >
-                    {{ csrf_field() }}
-                    <input name="_method" type="hidden" value="PATCH">
-                        <div class="modal-header">
-                            <h4>Edit Nilai Siswa : {{ $val->siswa->nama_depan }}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Mata Pelajaran</label>
-                                    <input type="hidden" name="mata_pelajaran_id" value="{{ $resultMapel->id or "-" }}">
-                                    <select  class="form-control" disabled>
-                                        <option value="">Pilih Mata Pelajaran</option>
-                                        @foreach($mapel2 as $id => $nama)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->mata_pelajaran_id? 'selected':''}}>{{ $nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>                                                        
-                            </div>    
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Kelas</label>
-                                    <input type="hidden" name="kelas_id" value="{{ $resultClass->id or "-"  }}">
-                                    <select name="" class="form-control" disabled>
-                                        <option value="">Pilih Kelas</option>
-                                        @foreach($kelas as $id => $nama)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->kelas_id? 'selected':''}}>{{ $nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Semester</label>
-                                    <input type="hidden" name="semester_id" value="{{ $resultSemesteran->id or "-"  }}">
-                                    <select  name="" class="form-control" disabled>
-                                        <option value="">Pilih Semester</option>
-                                        @foreach($semesters as $id => $semester)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->semeseter_id? 'selected':''}}>{{ $semester }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6"> 
-                                <div class="form-group">
-                                    <label for="">Tahun Ajar</label>
-                                    <input type="hidden" name="tahun_ajaran_id" value="{{ $resultAjaran->id or "-"  }}">
-                                    <select  name="" class="form-control" disabled>
-                                        <option value="">Pilih Tahun Ajar</option>
-                                        @foreach($tahunajar as $id => $tahun_ajaran)
-                                            <option value="{{ $id }}" {{old('id',$id)==$val->tahun_ajaran_id? 'selected':''}}>{{ $tahun_ajaran }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian1') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 1</label>
-                                    <input type="text" name="ulangan_harian1" value="{{ $val->ulangan_harian1 }}" id="ulangan_harian1" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ulangan_harian1') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian2') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 2</label>
-                                    <input type="text" name="ulangan_harian2" id="ulangan_harian2" value="{{ $val->ulangan_harian2 }}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ulangan_harian2') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('ulangan_harian3') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Ulangan Harian 3</label>
-                                    <input type="text" name="ulangan_harian3" id="ulangan_harian3" value="{{ $val->ulangan_harian3 }}"class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4"> 
-                                <div class="form-group" {{$errors->has('nilai_tugas1') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 1</label>
-                                    <input type="text" name="nilai_tugas1" id="nilai_tugas1" value="{{ $val->nilai_tugas1}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas1') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('nilai_tugas2') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 2</label>
-                                    <input type="text" name="nilai_tugas2" id="nilai_tugas2" value="{{ $val->nilai_tugas2}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas2') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('nilai_tugas3') ? 'has-error' : ''}}>
-                                    <label for="">Nilai Tugas 3</label>
-                                    <input type="text" name="nilai_tugas3" id="nilai_tugas3" value="{{ $val->nilai_tugas3}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai_tugas3') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('ujian_praktik') ? 'has-error' : ''}}>
-                                    <label for="">Ujian Praktik</label>
-                                    <input type="text" name="ujian_praktik" id="ujian_praktik" value="{{ $val->ujian_praktik}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('ujian_praktik') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" {{$errors->has('uts') ? 'has-error' : ''}}>
-                                    <label for="">Nilai UTS</label>
-                                    <input type="text" name="uts" id="uts" value="{{ $val->uts}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('uts') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">  
-                                <div class="form-group" {{$errors->has('nilai') ? 'has-error' : ''}}>
-                                    <label for="">Nilai UAS</label>
-                                    <input type="text" name="nilai" id="nilai" value="{{ $val->nilai}}" class="form-control input-sm" required>
-                                    <span class="text-danger">{{ $errors->first('nilai') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="">Keterangan</label>
-                                    <input type="text" name="keterangan" value="{{ $val->ketarangan }}" id="keterangan" class="form-control input-sm" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div>
-                                <input type="submit"  value="Simpan" class="btn btn-subscribe" >
-                            </div>
-                        </div>
-                    </form> 
-                </div>
-            </div>
-        </div>  
-        @endforeach
+        </div>
     </section>
 </div>
 
