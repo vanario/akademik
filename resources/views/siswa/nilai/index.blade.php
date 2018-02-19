@@ -138,15 +138,90 @@
                                             <td>{{ $val->siswa->nis or "-" }}</td>
                                             <td>{{ $val->siswa->nisn or "-"}}</td>
                                             <td>{{ $val->siswa->nama_depan or "-"}} {{ $val->siswa->belakang or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->ulangan_harian1 or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->ulangan_harian2 or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->ulangan_harian3 or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->nilai_tugas1 or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->nilai_tugas2 or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->nilai_tugas3 or "-"}}</td>
-                                            <td contenteditable="true" style="text-align:center">{{ $val->ujian_praktik or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->uts or "-"}}</td>
-                                            <td contenteditable="true">{{ $val->nilai or "-"}}</td>                                
+                                            <td id="input-satu{{ $val->id }}">
+                                                <input type="text" name="ulangan_harian1" id="inputDisabled{{ $val->id }}" value="{{ $val->ulangan_harian1 }}" size="1" disabled>
+                                                <script type="text/javascript">
+                                                    $('#input-satu{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabled{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+                                            </td>
+                                            <td id="input-dua{{ $val->id }}">
+                                                <input type="text" name="ulangan_harian2" id="inputDisabledDua{{ $val->id }}" value="{{ $val->ulangan_harian2 }}" size="1" disabled>
+                                                <script type="text/javascript">
+                                                    $('#input-dua{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledDua{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+                                            </td>
+                                            <td id="input-tiga{{ $val->id }}">
+                                                <input type="text" name="ulangan_harian3" id="inputDisabledTiga{{ $val->id }}" value="{{ $val->ulangan_harian3 }}" size="1" disabled>
+                                                <script type="text/javascript">
+                                                    $('#input-tiga{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledTiga{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+                                            </td>
+                                            <td id="input-tugas-satu{{ $val->id }}">
+                                                <input type="text" name="nilai_tugas1" id="inputDisabledTugasSatu{{ $val->id }}" value="{{ $val->nilai_tugas1 }}" size="1" disabled>
+                                                <script type="text/javascript">
+                                                    $('#input-tugas-satu{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledTugasSatu{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+                                            </td>
+                                            <td id="input-tugas-dua{{ $val->id }}">
+                                                <input type="text" name="nilai_tugas2" id="inputDisabledTugasDua{{ $val->id }}" value="{{ $val->nilai_tugas2 }}" size="1" disabled>
+                                                <script type="text/javascript">
+                                                    $('#input-tugas-dua{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledTugasDua{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+                                            </td>
+                                            <td id="input-tugas-tiga{{ $val->id }}">
+
+                                                <input type="text" name="nilai_tugas3" id="inputDisabledTugasTiga{{ $val->id }}" value="{{ $val->nilai_tugas3 }}" size="1" disabled>
+
+                                                <script type="text/javascript">
+                                                    $('#input-tugas-tiga{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledTugasTiga{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+
+                                            </td>
+                                            <td id="input-praktik{{ $val->id }}">
+
+                                                <input type="text" name="ujian_praktik" id="inputDisabledPraktik{{ $val->id }}" value="{{ $val->ujian_praktik }}" size="1" disabled>
+
+                                                <script type="text/javascript">
+                                                    $('#input-praktik{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledPraktik{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+
+                                            </td>
+                                            <td id="input-uts{{ $val->id }}">
+
+                                                <input type="text" name="uts" id="inputDisabledUts{{ $val->id }}" value="{{ $val->uts }}" size="1" disabled>
+
+                                                <script type="text/javascript">
+                                                    $('#input-uts{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledUts{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+
+                                            </td>
+                                            <td id="input-uas{{ $val->id }}">
+
+                                                <input type="text" name="nilai" id="inputDisabledUas{{ $val->id }}" value="{{ $val->nilai }}" size="1" disabled>
+
+                                                <script type="text/javascript">
+                                                    $('#input-uas{{ $val->id }}').click(function(){ // click to
+                                                        $('#inputDisabledUas{{ $val->id }}').prop('disabled', false); // removing disabled in this class
+                                                    });
+                                                </script>
+
+                                            </td>                             
                                             <td style="text-align:center">{{ $val->mapel->kkm or "-"}}</td>
                                             <td style="text-align:center">{{ $nilai_akhir or "-"}}</td>
                                             <td>
@@ -319,51 +394,6 @@
 
 @endsection
 
-@section('css')
-    <style type="text/css">
-      
-      @import "compass/css3";
-
-      .table-editable {
-        position: relative;
-        
-        .glyphicon {
-          font-size: 20px;
-        }
-      }
-
-      .table-remove {
-        color: #700;
-        cursor: pointer;
-        
-        &:hover {
-          color: #f00;
-        }
-      }
-
-      .table-up, .table-down {
-        color: #007;
-        cursor: pointer;
-        
-        &:hover {
-          color: #00f;
-        }
-      }
-
-      .table-add {
-        color: #070;
-        cursor: pointer;
-        position: absolute;
-        top: 8px;
-        right: 0;
-        
-        &:hover {
-          color: #0b0;
-        }
-      }  
-    </style>
-@endsection
-
 @section('script')
 
 @include('sweet::alert')
@@ -403,63 +433,6 @@
         });
     });
 
-</script>
-
-<script type="text/javascript">
-  var $TABLE = $('#table');
-  var $BTN = $('#export-btn');
-  var $EXPORT = $('#export');
-
-  $('.table-add').click(function () {
-    var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
-    $TABLE.find('table').append($clone);
-  });
-
-  $('.table-remove').click(function () {
-    $(this).parents('tr').detach();
-  });
-
-  $('.table-up').click(function () {
-    var $row = $(this).parents('tr');
-    if ($row.index() === 1) return; // Don't go above the header
-    $row.prev().before($row.get(0));
-  });
-
-  $('.table-down').click(function () {
-    var $row = $(this).parents('tr');
-    $row.next().after($row.get(0));
-  });
-
-  // A few jQuery helpers for exporting only
-  jQuery.fn.pop = [].pop;
-  jQuery.fn.shift = [].shift;
-
-  $BTN.click(function () {
-    var $rows = $TABLE.find('tr:not(:hidden)');
-    var headers = [];
-    var data = [];
-    
-    // Get the headers (add special header logic here)
-    $($rows.shift()).find('th:not(:empty)').each(function () {
-      headers.push($(this).text().toLowerCase());
-    });
-    
-    // Turn all existing rows into a loopable array
-    $rows.each(function () {
-      var $td = $(this).find('td');
-      var h = {};
-      
-      // Use the headers from earlier to name our hash keys
-      headers.forEach(function (header, i) {
-        h[header] = $td.eq(i).text();   
-      });
-      
-      data.push(h);
-    });
-    
-    // Output the result
-    $EXPORT.text(JSON.stringify(data));
-  });
 </script>
 
 @endsection
