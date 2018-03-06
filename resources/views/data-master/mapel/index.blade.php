@@ -18,6 +18,7 @@
                                 <th>No</th>
                                 <th>Kode Mata Pelajaran</th>
                                 <th>Nama</th>
+                                <th>KKM</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
@@ -31,6 +32,7 @@
                                 <td>{{ $no++}}</td>
                                 <td>{{ $val->kode_mapel or "-" }}</td>
                                 <td>{{ $val->nama or "-" }}</td>
+                                <td>{{ $val->kkm or "-" }}</td>
                                 <td>{{ $val->keterangan or "-"}}</td>
                                 <td>
                                     <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>      
@@ -67,6 +69,10 @@
                                 <input type="text" name="nama" id="nama" class="form-control input-sm" required>
                             </div>
                             <div class="form-group">
+                                <label for="">KKM</label>
+                                <input type="text" name="kkm" id="kkm" class="form-control input-sm" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Keterangan</label>
                                 <input type="text" name="keterangan" id="keterangan" class="form-control input-sm" required>
                             </div>                            
@@ -99,6 +105,10 @@
                             <div class="form-group">
                                 <label for="">Nama</label>
                                 <input type="text" name="nama" value="{{$val->nama}}" id="nama" class="form-control input-sm" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">KKM</label>
+                                <input type="text" name="kkm" value="{{$val->kkm}}" id="kkm" class="form-control input-sm" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Keterangan</label>

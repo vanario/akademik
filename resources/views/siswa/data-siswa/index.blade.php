@@ -120,15 +120,25 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-4"> 
+                                <div class="col-sm-4">                                
                                     <label for="">Agama</label>
-                                    <input type="text" name="agama" id="agama" class="form-control input-sm" required>
-                                </div> 
+                                    <select name="agama" id="agama" class="form-control" data-placeholder="Select a State" required>
+                                        <option value="">Pilih Agama</option>
+                                        <option value="1">Islam</option>
+                                        <option value="2">Kristen</option>
+                                        <option value="3">Hindu</option>
+                                        <option value="4">Bhuda</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-4">     
+                                <div class="col-sm-4">                                
                                     <label for="">Jenis Kelamin</label>
-                                    <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control input-sm" required>
+                                    <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" data-placeholder="Select a State" required>
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="L">L</option>
+                                        <option value="P">P</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -200,7 +210,7 @@
                             <div class="form-group">
                             </div>                                                       
                         </div>
-                         <div class="modal-footer">
+                        <div class="modal-footer">
                             <div class="col-sm-12"> 
                                  <input type="submit" value="Simpan" class="btn btn-subscribe" >
                             </div>
@@ -244,17 +254,27 @@
                                     <label for="">Tempat lahir</label>
                                     <input type="text" name="tempat_lahir" id="tempat_lahir" value="{{ $val->tempat_lahir }}" class="form-control input-sm" required>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="form-group">
-                                <div class="col-sm-4"> 
-                                    <label for="">Agama</label>
-                                    <input type="text" name="agama" id="agama" value="{{ $val->agama }}" class="form-control input-sm" required>
-                                </div> 
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-4">     
+                                <div class="col-sm-4">                                
                                     <label for="">Jenis Kelamin</label>
-                                    <input type="text" name="jenis_kelamin" id="jenis_kelamin" value="{{ $val->jenis_kelamin }}" class="form-control input-sm" required>
+                                    <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" data-placeholder="Select a State" required>
+                                        <option value="">{{ $val->jenis_kelamin }}</option>
+                                        <option value="L">L</option>
+                                        <option value="P">P</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">                                
+                                    <label for="">Agama</label>
+                                    <select name="agama" id="agama"   class="form-control" data-placeholder="Select a State" required>
+                                        <option value="">{{ $val->agama }}</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Bhuda">Bhuda</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -297,7 +317,7 @@
                                 <div class="col-sm-4"> 
                                     <label for="">Nama Belakang</label>
                                     <input type="text" value="{{ $val->nama_belakang }}" name="nama_belakang" id="nama_belakang" class="form-control input-sm" required>
-                                <div> 
+                                </div> 
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4"> 
@@ -312,26 +332,29 @@
                                 </div>
                             </div> 
                             <div class="form-group">
-                                <label for="">Alamat Wali Murid</label>
-                                <input type="text" value="{{ $val->alamat_wali_mulid }}" name="alamat_wali_murid" id="alamat_wali_murid" class="form-control input-sm" required>
+                                <div class="col-sm-4"> 
+                                    <label for="">Alamat Wali Murid</label>
+                                    <input type="text" value="{{ $val->alamat_wali_mulid }}" name="alamat_wali_murid" id="alamat_wali_murid" class="form-control input-sm" required>
+                                </div>
                             </div> 
                             <div class="form-group">
                                 <div class="col-sm-4"> 
                                     <label for="">No Telepon Wali Murid</label>
                                     <input type="text" value="{{ $val->no_telp_wali_murid }}" name="no_telp_wali_murid" id="no_telp_wali_murid" class="form-control input-sm" required>
                                 </div>
-                            <div> 
-                        </div>
+                            </div> 
+                        <div class="form-group">
+                            </div>                                                       
                         </div>
                         <div class="modal-footer">
-                            <div>
-                                <input type="submit"  value="Simpan" class="btn btn-subscribe" >
+                            <div class="col-sm-12"> 
+                                 <input type="submit" value="Simpan" class="btn btn-subscribe" >
                             </div>
                         </div>
-                    </form> 
-                </div>
+                    </form>
+                </div> 
             </div>
-        </div>  
+        </div>
         @endforeach
     </section>
 </div>
@@ -344,6 +367,32 @@
 <script src="{{ asset('adminlte/bower_components/bootstrap-typeahead.js') }}"></script>  
 <script src="{{ asset('adminlte/bower_components/jquery.mockjax.js') }}"></script>  
 <script src="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+
+<script type="text/javascript">
+
+    $(function() {
+
+        init_datepicker();
+        init_datetimepicker();
+
+        function init_datetimepicker() {
+            $('#tanggal_lahir').datetimepicker({
+                sideBySide: true,        
+            }); 
+        };
+        
+        function init_datepicker() {
+            $('#tanggal_lahir').datepicker({
+             format: 'yyyy-m-d',
+             autoclose: true
+           });
+        };
+   
+    });
+
+</script>
 
 <script type="text/javascript">
     $(function() {
