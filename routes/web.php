@@ -41,7 +41,15 @@ Route::group(['prefix' => 'pengampu', 'middleware' => ['web','level:1']], functi
      Route::post('store','Guru\PengampuController@store')->name('pengampu.store');
      Route::match(['put','patch'],'update/{id}','Guru\PengampuController@update')->name('pengampu.update');
      Route::get('delete/{id}', 'Guru\PengampuController@destroy')->name('pengampu.delete');
-  });
+});
+
+Route::group(['prefix' => 'jadwal', 'middleware' => ['web','level:1']], function() {
+
+     Route::get('/','Jadwal\JadwalController@index')->name('jadwal.index');
+     Route::post('store','Jadwal\JadwalController@store')->name('jadwal.store');
+     Route::match(['put','patch'],'update/{id}','Jadwal\JadwalController@update')->name('jadwal.update');
+     Route::get('delete/{id}', 'Jadwal\JadwalController@destroy')->name('jadwal.delete');
+});
 
 Route::group(['prefix' => 'wali-kelas', 'middleware' => ['web','level:1']], function() {
 
@@ -49,7 +57,7 @@ Route::group(['prefix' => 'wali-kelas', 'middleware' => ['web','level:1']], func
      Route::post('store','Guru\WaliKelasController@store')->name('wali-kelas.store');
      Route::match(['put','patch'],'update/{id}','Guru\WaliKelasController@update')->name('wali-kelas.update');
      Route::get('delete/{id}', 'Guru\WaliKelasController@destroy')->name('wali-kelas.delete');
-  });
+});
 
 Route::group(['prefix' => 'data-siswa', 'middleware' => ['web','level:1']], function() {
 
@@ -65,8 +73,14 @@ Route::group(['prefix' => 'nilai', 'middleware' => ['web','guru:3']], function()
      Route::match(['get','post'],'pdfprint','Siswa\NilaiController@print')->name('nilai.pdfprint');
      Route::match(['get','post'],'pdf','Siswa\NilaiController@pdf')->name('nilai.pdf');
      Route::post('store','Siswa\NilaiController@store')->name('nilai.store');
-     Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
+     // Route::match(['put','patch'],'update/{id}','Siswa\NilaiController@update')->name('nilai.update');
+     Route::post('update/{id}','Siswa\NilaiController@update')->name('nilai.update');
      Route::get('delete/{id}', 'Siswa\NilaiController@destroy')->name('nilai.delete');
+});
+
+Route::group(['prefix' => 'course', 'middleware' => ['web','level:1']], function() {
+     Route::match(['get','post'],'/','Siswa\CourseController@index')->name('course.index');
+     Route::post('store','Siswa\CourseController@store')->name('course.store');
 });
 
 Route::group(['prefix' => 'presensi', 'middleware' => ['web','level:1']], function() {

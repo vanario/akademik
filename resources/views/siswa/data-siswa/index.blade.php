@@ -37,13 +37,22 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>NIS</th>
+                                <th>NISN</th>
+                                <th>Username</th>
                                 <th>Nama Depan</th>
                                 <th>Nama Belakang</th>
                                 <th>Alamat</th>
                                 <th>Nama Wali Murid</th>
                                 <th>Alamat Wali Murid</th>
                                 <th>No Telepon Wali Murid</th>
+                                <th>Tempat, Tanggal Lahir</th>
+                                <th>Agama</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Nama Ayah</th>
+                                <th>Pekerjaan Ayah</th>
+                                <th>Nama Ibu</th>
+                                <th>Pekerjaan Ibu</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -54,6 +63,8 @@
                             @foreach($data as $val)  
                             <tr>
                                 <td>{{ $no++}}</td>
+                                <td>{{ $val->nis or "-"}}</td>
+                                <td>{{ $val->nisn or "-"}}</td>
                                 <td>{{ $val->user->name or "-"}}</td>
                                 <td>{{ $val->nama_depan or "-"}}</td>
                                 <td>{{ $val->nama_belakang or "-"}}</td>
@@ -61,6 +72,13 @@
                                 <td>{{ $val->nama_wali_murid or "-"}}</td>
                                 <td>{{ $val->alamat_wali_mulid or "-"}}</td>
                                 <td>{{ $val->no_telp_wali_murid or "-"}}</td>
+                                <td>{{ $val->tempat_lahir or "-"}},{{ $val->tanggal_lahir or "-"}}</td>
+                                <td>{{ $val->agama or "-"}}</td>
+                                <td>{{ $val->jenis_kelamin or "-"}}</td>
+                                <td>{{ $val->nama_ayah or "-"}}</td>
+                                <td>{{ $val->pekerjaan_ayah or "-"}}</td>
+                                <td>{{ $val->nama_ibu or "-"}}</td>
+                                <td>{{ $val->pekerjaan_ibu or "-"}}</td>
                                 <td>
                                     <a data-toggle="modal" data-target="#edit{{$val->id}}"><span class="fa fa-pencil"></span></a>      
                                     <a href="{{action('Siswa\DataSiswaController@destroy',$val->id)}}" id="hapus" ><i class="fa fa-trash"></i></a>
@@ -110,7 +128,12 @@
                             <div class="form-group">
                                 <div class="col-sm-4">     
                                     <label for="">Tanggal lahir</label>
-                                    <input type="text" name="tanggal_lahir" id="tanggal_lahir" class="form-control input-sm" required>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" name="tanggal_lahir" id="datepicker">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -122,6 +145,7 @@
                             <div class="form-group">
                                 <div class="col-sm-4">                                
                                     <label for="">Agama</label>
+<<<<<<< HEAD
                                     <select name="agama" id="agama" class="form-control" data-placeholder="Select a State" required>
                                         <option value="">Pilih Agama</option>
                                         <option value="1">Islam</option>
@@ -130,21 +154,44 @@
                                         <option value="4">Bhuda</option>
                                     </select>
                                 </div>
+=======
+                                    <select  name="agama" class="form-control">
+                                        <option value="">Pilih Agama</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                    </select>
+                                </div> 
+>>>>>>> be15ef2bab29030020aa566d83b0f3c81f569835
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4">                                
                                     <label for="">Jenis Kelamin</label>
+<<<<<<< HEAD
                                     <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" data-placeholder="Select a State" required>
                                         <option value="">Pilih Jenis Kelamin</option>
                                         <option value="L">L</option>
                                         <option value="P">P</option>
+=======
+                                    <select  name="jenis_kelamin" class="form-control">
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+>>>>>>> be15ef2bab29030020aa566d83b0f3c81f569835
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4"> 
                                     <label for="">kelas</label>
-                                    <input type="text" name="kelas" id="kelas" class="form-control input-sm" required>
+                                    <select  name="kelas" class="form-control">
+                                        <option>Pilih Kelas</option>
+                                        @foreach($class as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>                                    
                                 </div>
                             </div>
                             <div class="form-group">
@@ -246,7 +293,12 @@
                             <div class="form-group">
                                 <div class="col-sm-4">     
                                     <label for="">Tanggal lahir</label>
-                                    <input type="text" name="tanggal_lahir" value="{{ $val->tanggal_lahir }}" id="tanggal_lahir" class="form-control input-sm" required>
+                                     <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" value="{{ $val->tanggal_lahir }}" name="tanggal_lahir" id="datepicker{{$val->id}}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -256,6 +308,7 @@
                                 </div>
                             </div>                            
                             <div class="form-group">
+<<<<<<< HEAD
                                 <div class="col-sm-4">                                
                                     <label for="">Jenis Kelamin</label>
                                     <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" data-placeholder="Select a State" required>
@@ -264,6 +317,19 @@
                                         <option value="P">P</option>
                                     </select>
                                 </div>
+=======
+                                <div class="col-sm-4"> 
+                                    <label for="">Agama</label>
+                                    <select  name="agama" class="form-control">
+                                        <option value="">Pilih Agama</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                    </select>
+                                </div> 
+>>>>>>> be15ef2bab29030020aa566d83b0f3c81f569835
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4">                                
@@ -395,6 +461,15 @@
 </script>
 
 <script type="text/javascript">
+    $('#datepicker').datepicker({
+          autoclose: true
+    })
+    @foreach($data as $guru)
+        $('#datepicker{{$guru->id}}').datepicker({
+              autoclose: true
+        })
+    @endforeach
+    
     $(function() {
         function displayResult(item) {            
             $("#userValue").val(item.value);

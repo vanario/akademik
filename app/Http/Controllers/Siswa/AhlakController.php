@@ -8,13 +8,14 @@ use App\Models\AhlakDanKepribadian;
 use App\Models\Ref_Kelas;
 use App\Models\Ref_TahunAjar;
 use App\Models\User;
+use App\Models\DataSiswa;
 use Alert;
 
 class AhlakController extends Controller
 {
     public function index(Request $request)
     {
-    	$siswa      = User::where('level',4)->get();
+    	$siswa      = DataSiswa::all();
 
         $query = AhlakDanKepribadian::query();
 
